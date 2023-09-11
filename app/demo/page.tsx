@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { playGame } from "./backend";
 
-const page = () => {
+const Demo = () => {
   const [bet, setBet] = useState(0);
   const [multiplier, setMultiplier] = useState(0);
   const [result, setResult] = useState(0);
@@ -32,7 +32,7 @@ const page = () => {
   );
 };
 
-export default page;
+export default Demo;
 function fromRandomNumberToSuccess(bet: number, multiplier: number) {
   throw new Error("Function not implemented.");
 }
