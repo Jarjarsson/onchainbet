@@ -15,7 +15,6 @@ const fromRandomNumberToSuccess = (multiplier: number) => {
   const [first, second] = Array.from({ length: 2 }, () =>
     Math.floor(Math.random() * 10)
   );
-  console.log({ multiplier });
   if (multiplier === 2) {
     return first % 2 === 0 && second !== 0;
   } else if (multiplier === 3) {
@@ -38,15 +37,14 @@ const playGame = (bet: number, multiplier: number): Result => {
     return { status: "Sorry, you are broke", amount: 0 };
   } else {
     const win = fromRandomNumberToSuccess(multiplier);
-
+    playerBalance -= bet;
+    DPcoins += bet;
     if (win) {
       DPcoins -= prize;
       playerBalance += prize;
       console.log(DPcoins);
       return { status: "Congrats!", amount: prize };
     }
-    DPcoins += bet;
-    playerBalance -= bet;
     console.log(DPcoins);
     return { status: "You lost!", amount: 0 };
   }
