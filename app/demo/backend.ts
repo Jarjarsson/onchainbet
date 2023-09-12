@@ -2,12 +2,20 @@
 // Triple:  30%  (0.3*1)
 // 4 times : 20% (0.5*0.4)
 // 5 times:  10% (0.2*0.5)
-// 10 times : 1% (0.1*0.1)
+// 10 times : 9% (0.1*0.9)
+
+import { Result } from "../type";
+
+let DPcoins = 1000;
+let playerBalance = 500;
+
+const getPlayerBalance = () => playerBalance;
 
 const fromRandomNumberToSuccess = (multiplier: number) => {
   const [first, second] = Array.from({ length: 2 }, () =>
     Math.floor(Math.random() * 10)
   );
+  console.log({ multiplier });
   if (multiplier === 2) {
     return first % 2 === 0 && second !== 0;
   } else if (multiplier === 3) {
@@ -17,16 +25,31 @@ const fromRandomNumberToSuccess = (multiplier: number) => {
   } else if (multiplier === 5) {
     return [0, 1].includes(first) && [1, 6, 7, 8, 9].includes(second);
   } else {
-    return 0 === first && 0 === second;
+    return 0 === first && 0 !== second;
   }
 };
 
-const playGame = (bet: number, multiplier: number): number => {
-  const resultMul = fromRandomNumberToSuccess(multiplier);
-  if (resultMul) {
-    return multiplier * bet;
+const playGame = (bet: number, multiplier: number): Result => {
+  const prize = bet * multiplier;
+  let DPMin = DPcoins - 100;
+  if (DPMin < prize) {
+    return { status: "Developoors are broke", amount: 0 };
+  } else if (playerBalance < bet) {
+    return { status: "Sorry, you are broke", amount: 0 };
+  } else {
+    const win = fromRandomNumberToSuccess(multiplier);
+
+    if (win) {
+      DPcoins -= prize;
+      playerBalance += prize;
+      console.log(DPcoins);
+      return { status: "Congrats!", amount: prize };
+    }
+    DPcoins += bet;
+    playerBalance -= bet;
+    console.log(DPcoins);
+    return { status: "You lost!", amount: 0 };
   }
-  return 0;
 };
 
-export { playGame };
+export { playGame, getPlayerBalance };
