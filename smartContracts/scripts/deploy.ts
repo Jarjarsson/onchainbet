@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 
 const main = async () => {
-  const Onchainbet = await ethers.getContractFactory("Onchainbet");
+  const Onchainbet = await ethers.getContractFactory("onChainBet");
   const onchainbet = await Onchainbet.deploy();
 
   await onchainbet.waitForDeployment();
@@ -11,7 +11,6 @@ const main = async () => {
 
 const runMain = async () => {
   try {
-    runMain();
     await main();
     process.exit(0);
   } catch (error) {
@@ -19,3 +18,4 @@ const runMain = async () => {
     process.exit(1);
   }
 };
+runMain();
