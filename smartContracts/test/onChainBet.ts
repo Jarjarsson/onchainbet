@@ -1,19 +1,24 @@
-import { expect } from "chai";
-import { ethers } from "hardhat";
+import { ethers } from 'hardhat';
+import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { expect } from 'chai';
+import { WeiPerEther, parseEther } from 'ethers';
+import Contract from 'web3-eth-contract';
 
-describe("Onchainbet Contract", function () {
-  let prize: number;
-  let ranNum: number;
+describe('onChainBet', function () {
+  let owner: SignerWithAddress;
+  let player1: SignerWithAddress;
+  let onChainBet: any;
 
-  // Before each test, deploy a new Clicker contract
   beforeEach(async function () {
-    const Onchainbet = await ethers.getContractFactory("Onchainbet");
-    const onchainbet = await Onchainbet.deploy();
-    await onchainbet.waitForDeployment();
+    [owner as any, player1 as any] = await ethers.getSigners();
 
-    it("Should deploy with balance of 0", async function () {
-      const balance = await onchainbet.getBalance("Onchainbet");
-      expect(balance).to.equal(0);
-    });
+    const Contract = await ethers.getContractFactory('onChainBet');
+    onChainBet = await Contract.deploy();
+    await onChainBet.waitForDeployment();
   });
+
+  it('should set the owner to the deployer', async function () {
+    expect(await onChainBet.owner()).to.equal(owner.address);
+  });
+  
 });
