@@ -1,4 +1,4 @@
-const testProbabilities = (runs: number) => {
+const demoP = (runs: number) => {
   let two = 0;
   let three = 0;
   let four = 0;
