@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from "react";
 import { connectWallet, placeBet } from "./web3/web3Client";
 import contractAddress from "./constants/address";
@@ -7,7 +8,7 @@ const Bet = () => {
   const [wallet, setWallet] = useState("");
 
   const handleBet = (multiplier: number) => {
-    placeBet(contractAddress, address, multiplier, 0);
+    // placeBet(contractAddress, address,  100000, 2);
   };
 
   const handleSelectWallet = async () => {
@@ -18,8 +19,8 @@ const Bet = () => {
 
   return (
     <>
-      <button onClick={() => handleBet(3)}></button>;<p>{wallet}</p>;
-      <button onClick={() => handleSelectWallet()}></button>;
+      <button onClick={() => handleBet(3)}>BUTTON</button>;helllo<p>{wallet}</p>;
+      <button onClick={() => handleSelectWallet()}>CONNECT</button>
     </>
   );
 };

@@ -17,9 +17,9 @@ const placeBet = async (
   const transactionParameters = {
     to: contractAddress,
     from: address,
-    data: onChainBet.methods.placeBet(),
+    data: onChainBet.methods.placeBet().encodeABI(),
     value: amount,
-    multiplier,
+    multiplier: multiplier
   };
 
   try {
