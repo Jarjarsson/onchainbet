@@ -1,16 +1,17 @@
 import { ethers } from "hardhat";
 
 const main = async () => {
-  const Clicker = await ethers.getContractFactory("Clicker");
-  const clicker = await Clicker.deploy();
+  const Onchainbet = await ethers.getContractFactory("Onchainbet");
+  const onchainbet = await Onchainbet.deploy();
 
-  await clicker.waitForDeployment();
-  const address = await clicker.getAddress();
-  console.log("Clicker deployed to:", address);
+  await onchainbet.waitForDeployment();
+  const address = await onchainbet.getAddress();
+  console.log("onchainbet deployed to:", address);
 };
 
 const runMain = async () => {
   try {
+    runMain();
     await main();
     process.exit(0);
   } catch (error) {
@@ -18,5 +19,3 @@ const runMain = async () => {
     process.exit(1);
   }
 };
-
-runMain();
