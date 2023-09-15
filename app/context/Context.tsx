@@ -1,11 +1,13 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { createContext, useContext } from "react";
-import { connectWallet } from "../bet/web3/web3Client";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { createContext, useContext } from 'react';
+import { connectWallet } from '../bet/web3/web3Client';
 
 type ContextType = {
   wallet: string;
   setWallet: (address: string) => void;
+  connect: boolean;
+  setConnect: (statuse: boolean) => void;
 };
 
 type Props = {
@@ -13,24 +15,19 @@ type Props = {
 };
 
 const ContextDefaultValues: ContextType = {
-  wallet: "",
+  wallet: '',
   setWallet: () => {},
+  connect: false,
+  setConnect: () => {},
 };
 const TContext = createContext<ContextType>(ContextDefaultValues);
 
 export const TContextProvider = ({ children }: Props) => {
-  const [wallet, setWallet] = useState("");
-
-  //   useEffect(() => {
-  //     async () =>
-  //       await connectWallet().then((res) => {
-  //         setWallet(res.address);
-  //       });
-  //     console.log(wallet);
-  //   }, [wallet]);
+  const [wallet, setWallet] = useState('');
+  const [connect, setConnect] = useState(false);
 
   return (
-    <TContext.Provider value={{ wallet, setWallet }}>
+    <TContext.Provider value={{ wallet, setWallet, connect, setConnect }}>
       {children}
     </TContext.Provider>
   );

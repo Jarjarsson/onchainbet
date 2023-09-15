@@ -10,8 +10,7 @@ import contractAddress from "./constants/address";
 import { useTContext } from "../context/Context";
 
 const Bet = () => {
-  const [address, setAddress] = useState("");
-  const { wallet } = useTContext();
+  const { wallet,connect } = useTContext();
   const [contractBalance, setContractBalance] = useState("");
   const [multiplier, setMultiplier] = useState(2);
 
@@ -19,20 +18,14 @@ const Bet = () => {
     placeBet(contractAddress, wallet, multiplier, 1000000000000000);
   };
 
-  const handleSelectWallet = async () => {
-    await connectWallet().then((res) => {
-      setAddress(res.address);
-    });
-  };
 
   return (
     <>
-      <p>Multiplier</p>
-      <button onClick={() => handleBet(multiplier)}>BET</button>
-      <p>{wallet}</p>;
-      {/* <button onClick={() => handleSelectWallet()}>CONNECT</button> */}
-      <button onClick={() => console.log(ethToWei(0.2))}>test</button>
-      <p>{multiplier}</p>
+      
+      {connect && <button onClick={() => handleBet(multiplier)}>BET</button>}
+      {!connect && <p>Connect wallet to proceed</p>}
+      <button onClick={() => console.log(ethToWei(0.2))}>Console log WEI</button>
+      <p>Multiplier: {multiplier}</p>
       <input
         type="range"
         value={multiplier}
