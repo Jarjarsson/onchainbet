@@ -6,8 +6,8 @@ const web3 = new Web3(
   'wss://eth-sepolia.g.alchemy.com/v2/ET7Rh8pt9Djc9dEaYvVcxhWd5EtIn3PK'
 );
 
-const ethToWei = (eth: number) => Web3.utils.toWei(eth.toString(), 'ether');
-const weiToEth = (wei: number) => Web3.utils.fromWei(wei.toString(), 'ether');
+const ethToWei = (eth: number) => Number(Web3.utils.toWei(eth.toString(), 'ether'));
+const weiToEth = (wei: number) => Number(Web3.utils.fromWei(wei.toString(), 'ether'));
 const onChainBet = new web3.eth.Contract(abi, contractAddress);
 
 const placeBet = async (
@@ -22,7 +22,7 @@ const placeBet = async (
     data: onChainBet.methods
       .placeBet(Number(multiplier).toString(16))
       .encodeABI(),
-    value: amount.toString(16),
+    value: Number(ethToWei(amount)).toString(16),
   };
   try {
     const txHash = await (window as any).ethereum.request({
@@ -42,7 +42,7 @@ const placeBet = async (
 const getMaxBet = async () => {
   const eth = await web3.eth.getBalance(contractAddress); // wei
   const maxEth = Number(eth)/12;
-  return Number((weiToEth(maxEth)));
+  return weiToEth(maxEth);
 };
 
 const connectWallet = async () => {
@@ -71,7 +71,7 @@ const connectWallet = async () => {
 };
 
 const gameResult = (callback: (event: any) => void) => {
-  onChainBet.events.GameResult().on('data' as any, (event: any) => {
+  onChainBet.events.GameResult().on('data', (event: any) => {
     callback(event.returnValues);
   });
 };
