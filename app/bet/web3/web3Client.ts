@@ -7,6 +7,7 @@ const web3 = new Web3(
 );
 
 const ethToWei = (eth: number) => Web3.utils.toWei(eth.toString(), 'ether');
+const weiToEth = (wei: number) => Web3.utils.fromWei(wei.toString(), 'ether');
 const onChainBet = new web3.eth.Contract(abi, contractAddress);
 
 const placeBet = async (
@@ -38,8 +39,10 @@ const placeBet = async (
   }
 };
 
-const getContractBalance = async () => {
-  return web3.eth.getBalance(contractAddress);
+const getMaxBet = async () => {
+  const eth = await web3.eth.getBalance(contractAddress); // wei
+  const maxEth = Number(eth)/12;
+  return Number((weiToEth(maxEth)));
 };
 
 const connectWallet = async () => {
@@ -67,4 +70,9 @@ const connectWallet = async () => {
   }
 };
 
-export { placeBet, connectWallet, getContractBalance, ethToWei };
+const gameResult = (callback: (event: any) => void) => {
+  onChainBet.events.GameResult().on('data' as any, (event: any) => {
+    callback(event.returnValues);
+  });
+};
+export { placeBet, connectWallet, getMaxBet, ethToWei, gameResult };
