@@ -8,6 +8,7 @@ const Bet = () => {
   const [wallet, setWallet] = useState("");
   const [contractBalance, setContractBalance]=useState("")
   const [multiplier,setMultiplier]=useState(0)
+  const [sliderValue, setSliderValue] = useState(5)
 
   const handleBet = (multiplier: number) => {
      placeBet(contractAddress, wallet,  multiplier, 1000000000000000);
@@ -34,6 +35,8 @@ const Bet = () => {
       <button onClick={() => handleBet(multiplier)}>BET</button><p>{wallet}</p>;
       <button onClick={() => handleSelectWallet()}>CONNECT</button>
       <button onClick={() => console.log(ethToWei(0.2))}>test</button>
+      <p>{sliderValue}</p>
+      <input type="range" value={sliderValue} min={2} max={10} onChange={e => setSliderValue(Number(e.target.value))} />
     </>
   );
 };
