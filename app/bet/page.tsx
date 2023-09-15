@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { getContractBalance, connectWallet, placeBet, ethToWei } from "./web3/web3Client";
 import contractAddress from "./constants/address";
 
