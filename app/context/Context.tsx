@@ -1,28 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { createContext, useContext } from 'react';
-import { connectWallet } from '../bet/web3/web3Client';
+"use client";
+import React, { useEffect, useState } from "react";
+import { createContext, useContext } from "react";
+import { connectWallet } from "../bet/web3/web3Client";
 
 type ContextType = {
-    wallet:string
+  wallet: string;
+  setWallet: (address: string) => void;
 };
-const ContextDefaultValues: authContextType = {
-    wallet:''
+
+type Props = {
+  children: React.ReactNode;
 };
-const TContext = createContext<ContextType>(ContextDefaultValues)
 
-export const TContextProvider = ({children:})=>{
-    const [wallet, setWallet]=useState('')
+const ContextDefaultValues: ContextType = {
+  wallet: "",
+  setWallet: () => {},
+};
+const TContext = createContext<ContextType>(ContextDefaultValues);
 
-    useEffect(()=>{async()=>
-        await connectWallet().then((res) => {
-            setWallet(res.address);
-    })},[wallet])
+export const TContextProvider = ({ children }: Props) => {
+  const [wallet, setWallet] = useState("");
 
-   
-    return (
-        <TContext.Provider value={{wallet, setWallet}}>{children}</TContext.Provider>
-    )
-}
+  //   useEffect(() => {
+  //     async () =>
+  //       await connectWallet().then((res) => {
+  //         setWallet(res.address);
+  //       });
+  //     console.log(wallet);
+  //   }, [wallet]);
 
-export const useTContext = ()=>{useContext(TContext)}
+  return (
+    <TContext.Provider value={{ wallet, setWallet }}>
+      {children}
+    </TContext.Provider>
+  );
+};
 
+export const useTContext = () => useContext(TContext);
