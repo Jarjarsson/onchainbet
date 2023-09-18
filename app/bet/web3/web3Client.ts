@@ -82,4 +82,12 @@ const gameResult = (
     }
   });
 };
+
+export const checkConnection = async (cb: (account: string) => void) => {
+  const accounts = await (window as any).ethereum.request({ method: 'eth_accounts' });
+  if(accounts.length ==! 0){
+    cb(accounts[0])
+  }
+}
+
 export { placeBet, connectWallet, getMaxBet, ethToWei, gameResult, weiToEth };
