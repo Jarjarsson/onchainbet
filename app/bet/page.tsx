@@ -22,7 +22,10 @@ const BetPage = () => {
       <main className="flex justify-center items-center w-50">
         {connect && <Bet />}
         {!connect && (
-          <p className="text-cc3 font-semibold text-5xl pt-20">
+          <p
+            className="text-cc3 font-semibold text-5xl pt-20 typing-animation"
+            // style={{ animation: "typing 3s steps(10) infinite" }}
+          >
             Connect wallet to proceed
           </p>
         )}
