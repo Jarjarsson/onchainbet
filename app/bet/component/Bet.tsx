@@ -3,23 +3,31 @@ import React, { useEffect, useState } from 'react';
 import contractAddress from '../constants/address';
 import { useTContext } from '../../context/Context';
 import { gameResult, getMaxBet, placeBet } from '../web3/web3Client';
+import { ReturnValues } from '@/app/type';
 
 const Bet = () => {
   const [multiplier, setMultiplier] = useState(2);
   const { wallet } = useTContext();
   const [amount, setAmount] = useState(0.000000001);
   const [maxAmount, setMaxAmount] = useState(0);
+  const [loadingBet, setLoadingBet] = useState(false);
+  const [result, setResult] = useState('');
   useEffect(() => {
     (async () => {
       setMaxAmount(await getMaxBet());
     })();
-    gameResult(value => {
-      console.log(value);
-    });
   }, []);
+  useEffect(() => {
+    gameResult((value: ReturnValues) => {
+      setLoadingBet(false);
+      setResult(value.status)
+      console.log(value);
+    }, wallet);
+  }, [wallet]);
 
   const handleBet = (multiplier: number) => {
-    console.log(amount);
+    setLoadingBet(true);
+    setResult('');
     if (amount > 0) {
       placeBet(contractAddress, wallet, multiplier, amount);
     }
@@ -57,6 +65,8 @@ const Bet = () => {
         // }
       />
       <button> Place bet </button>
+      {loadingBet && <p>Getting result</p>}
+      {result === '' ? <p></p> : <p>{result}</p> }
     </form>
   );
 };
