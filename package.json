@@ -27,6 +27,7 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "^3.0.4",
     "@types/jest": "^29.5.4",
+    "@types/web3": "^1.2.2",
     "ethers": "^6.7.1"
   }
 }
