@@ -14,7 +14,7 @@ export default function Home() {
         />
       </header>
       <main>
-        <div className="flex flex-col gap-10 justify-center items-center pt-16 ">
+        <div className="flex flex-col gap-10 justify-center items-center  ">
           <Link
             href={"/bet"}
             className="text-cc3 text-4xl font-bold bg-cc3/50 px-3 py-2 rounded-lg"
