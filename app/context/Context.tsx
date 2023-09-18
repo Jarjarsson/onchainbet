@@ -1,7 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { createContext, useContext } from "react";
-import { connectWallet } from "../bet/web3/web3Client";
 
 type ContextType = {
   wallet: string;
