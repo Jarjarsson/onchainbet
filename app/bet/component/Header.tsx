@@ -17,24 +17,24 @@ const Header = () => {
   };
 
   return (
-    <header className="flex justify-between px-8 py-2 ">
+    <header className="flex justify-between px-8 py-2 items-center ">
       <Image
         src="/logo.png"
         alt="logo"
-        width={60}
-        height={60}
+        width={80}
+        height={80}
         className="rounded-md"
       />
       {!connect && (
         <button
           onClick={handleSelectWallet}
-          className="border border-[#13172a] p-1 rounded-md font-semibold text-cc3"
+          className=" px-2 py-1 font-semibold text-cc3 bg-cc3/50 rounded-md h-2/3"
         >
           Connect wallet
         </button>
       )}
       {connect && (
-        <p className="border border-[#13172a] p-1 rounded-md font-semibold flex items-center">
+        <p className="px-2 py-1 font-semibold text-cc3 bg-cc3/50 rounded-md h-2/3">
           {wallet !== "" && cropWallet(wallet)}
         </p>
       )}
