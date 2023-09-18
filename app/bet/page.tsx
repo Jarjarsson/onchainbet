@@ -8,8 +8,8 @@ import {
 } from "./web3/web3Client";
 import contractAddress from "./constants/address";
 import { useTContext } from "../context/Context";
-import Header from "./component/Header";
-import Bet from "./component/Bet";
+import Header from "../component/Header";
+import Bet from "../component/Bet";
 
 const BetPage = () => {
   const { wallet, connect } = useTContext();

@@ -1,11 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import { playGame, getPlayerBalance } from "./backend";
+import { playGame, getPlayerBalance, getPool } from "./backend";
 import Image from "next/image";
+import BettingForm from "../component/BettingForm";
 
 const Demo = () => {
-  const [bet, setBet] = useState(0);
-  const [multiplier, setMultiplier] = useState(2);
   const [result, setResult] = useState(0);
   const [playerbalance, setPlayerbalance] = useState(0);
 
@@ -13,8 +12,9 @@ const Demo = () => {
     setPlayerbalance(getPlayerBalance());
   }, []);
 
-  const handleBet = () => {
-    const r = playGame(bet, multiplier);
+  const handleBet = async (multiplier: number, amount: number) => {
+    const r = playGame(amount, multiplier);
+    console.log({amount, multiplier, r});
     setResult(r.amount);
     setPlayerbalance(getPlayerBalance());
   };
@@ -30,30 +30,9 @@ const Demo = () => {
           className="rounded-md"
         />
       </header>
-      <main className="flex gap-2">
-        <p>Bet</p>
-        <input
-          value={bet}
-          onChange={(event) => setBet(Number(event.target.value))}
-        />
-      </main>
-      <div className="flex gap-2">
-        <p>Multiplier</p>
-        <select
-          value={multiplier}
-          onChange={(event) => setMultiplier(Number(event.target.value))}
-        >
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-          <option value={10}>10</option>
-        </select>
-      </div>
-
-      <button onClick={handleBet}>BET</button>
-      <p>This is the result: {result}</p>
-      <p>PlayerBalance: {playerbalance}</p>
+      <BettingForm handleBet={handleBet} maxAmount={getPool()/12}/>
+      <p className="text-cc3">This is the result: {result}</p>
+      <p className="text-cc3">PlayerBalance: {playerbalance}</p>
     </>
   );
 };

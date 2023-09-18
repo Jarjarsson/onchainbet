@@ -1,9 +1,9 @@
 'use client';
 import React, { useEffect } from 'react';
 import Image from 'next/image';
-import { useTContext } from '../../context/Context';
-import { checkConnection, connectWallet } from '../web3/web3Client';
-import { cropWallet } from '../utils/utils';
+import { useTContext } from '../context/Context';
+import { checkConnection, connectWallet } from '../bet/web3/web3Client';
+import { cropWallet } from '../bet/utils/utils';
 
 const Header = () => {
   const { wallet, setWallet } = useTContext();

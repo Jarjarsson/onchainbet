@@ -1,6 +1,6 @@
 import { ReturnValues } from "@/app/type";
 import React, { useEffect, useState } from "react";
-import { gameResult, weiToEth } from "../web3/web3Client";
+import { gameResult, weiToEth } from "../bet/web3/web3Client";
 import { useTContext } from "@/app/context/Context";
 
 const Result = () => {
@@ -14,7 +14,7 @@ const Result = () => {
       setPrize(weiToEth(Number(value.amount)));
       console.log(value);
     }, wallet);
-  }, [wallet]);
+  }, [wallet, setLoadingBet]);
 
   const handlePlayAgain = () => {
     setShowResult(false);

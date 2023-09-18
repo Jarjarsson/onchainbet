@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import contractAddress from '../constants/address';
-import { useTContext } from '../../context/Context';
-import { getMaxBet, placeBet } from '../web3/web3Client';
+import contractAddress from '../bet/constants/address';
+import { useTContext } from '../context/Context';
+import { getMaxBet, placeBet } from '../bet/web3/web3Client';
 import Result from './result';
 
 const Bet = () => {
