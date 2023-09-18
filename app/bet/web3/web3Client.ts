@@ -1,17 +1,16 @@
-import Web3 from 'web3';
-import abi from '../constants/abi';
-import contractAddress from '../constants/address';
-import { ReturnValues } from '@/app/type';
-
+import Web3 from "web3";
+import abi from "../constants/abi";
+import contractAddress from "../constants/address";
+import { ReturnValues } from "@/app/type";
 
 const web3 = new Web3(
-  'wss://eth-sepolia.g.alchemy.com/v2/ET7Rh8pt9Djc9dEaYvVcxhWd5EtIn3PK'
+  "wss://eth-sepolia.g.alchemy.com/v2/ET7Rh8pt9Djc9dEaYvVcxhWd5EtIn3PK"
 );
 
 const ethToWei = (eth: number) =>
-  Number(Web3.utils.toWei(eth.toString(), 'ether'));
+  Number(Web3.utils.toWei(eth.toString(), "ether"));
 const weiToEth = (wei: number) =>
-  Number(Web3.utils.fromWei(wei.toString(), 'ether'));
+  Number(Web3.utils.fromWei(wei.toString(), "ether"));
 const onChainBet = new web3.eth.Contract(abi, contractAddress);
 
 const placeBet = async (
@@ -28,15 +27,15 @@ const placeBet = async (
   };
   try {
     const txHash = await (window as any).ethereum.request({
-      method: 'eth_sendTransaction',
+      method: "eth_sendTransaction",
       params: [transactionParameters],
     });
     return {
-      status: 'Success! Transaction hash: ' + txHash,
+      status: "Success! Transaction hash: " + txHash,
     };
   } catch (error) {
     return {
-      status: 'Something went wrong',
+      status: "Something went wrong",
     };
   }
 };
@@ -51,7 +50,7 @@ const connectWallet = async () => {
   if ((window as any).ethereum) {
     try {
       const addressArray = await (window as any).ethereum.request({
-        method: 'eth_requestAccounts',
+        method: "eth_requestAccounts",
       });
       const obj = {
         connected: true,
@@ -60,13 +59,13 @@ const connectWallet = async () => {
       return obj;
     } catch (err) {
       return {
-        address: '',
+        address: "",
         connected: false,
       };
     }
   } else {
     return {
-      address: '',
+      address: "",
       connected: false,
     };
   }
@@ -76,11 +75,11 @@ const gameResult = (
   callback: (event: ReturnValues) => void,
   address: string
 ) => {
-  onChainBet.events.GameResult().on('data', event => {
+  onChainBet.events.GameResult().on("data", (event) => {
     const data: ReturnValues = event.returnValues as ReturnValues;
     if (data.playerAddress.toLowerCase() === address) {
       callback(data);
     }
   });
 };
-export { placeBet, connectWallet, getMaxBet, ethToWei, gameResult };
+export { placeBet, connectWallet, getMaxBet, ethToWei, gameResult, weiToEth };
