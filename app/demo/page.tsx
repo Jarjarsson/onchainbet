@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { playGame, getPlayerBalance } from "./backend";
+import Image from "next/image";
 
 const Demo = () => {
   const [bet, setBet] = useState(0);
@@ -20,13 +21,22 @@ const Demo = () => {
 
   return (
     <>
-      <div className="flex gap-2">
+      <header>
+        <Image
+          src="/logo.png"
+          alt="logo"
+          width={60}
+          height={60}
+          className="rounded-md"
+        />
+      </header>
+      <main className="flex gap-2">
         <p>Bet</p>
         <input
           value={bet}
           onChange={(event) => setBet(Number(event.target.value))}
         />
-      </div>
+      </main>
       <div className="flex gap-2">
         <p>Multiplier</p>
         <select

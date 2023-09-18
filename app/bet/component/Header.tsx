@@ -1,16 +1,16 @@
-'use client';
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { useTContext } from '../../context/Context';
-import { connectWallet } from '../web3/web3Client';
-import { cropWallet } from '../utils/utils';
+"use client";
+import React, { useState } from "react";
+import Image from "next/image";
+import { useTContext } from "../../context/Context";
+import { connectWallet } from "../web3/web3Client";
+import { cropWallet } from "../utils/utils";
 
 const Header = () => {
   const { wallet, setWallet } = useTContext();
   const { connect, setConnect } = useTContext();
 
   const handleSelectWallet = async () => {
-    await connectWallet().then(res => {
+    await connectWallet().then((res) => {
       setWallet(res.address);
       setConnect(true);
     });
@@ -28,14 +28,14 @@ const Header = () => {
       {!connect && (
         <button
           onClick={handleSelectWallet}
-          className="border border-[#13172a] p-1 rounded-md font-semibold"
+          className="border border-[#13172a] p-1 rounded-md font-semibold text-cc3"
         >
           Connect wallet
         </button>
       )}
       {connect && (
         <p className="border border-[#13172a] p-1 rounded-md font-semibold flex items-center">
-          {wallet !== '' && cropWallet(wallet)}
+          {wallet !== "" && cropWallet(wallet)}
         </p>
       )}
     </header>

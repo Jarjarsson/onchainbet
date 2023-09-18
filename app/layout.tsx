@@ -18,10 +18,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* <body className={inter.className}> */}
-      <body className='bg-gradient-to-br from-blue-900 to-emerald-200'>
-        <TContextProvider>
-        {children}
-        </TContextProvider>
+      <body className="bg-gradient-to-br from-cc1 from-30% to-cc2 h-screen">
+        <TContextProvider>{children}</TContextProvider>
       </body>
     </html>
   );
