@@ -20,16 +20,23 @@ const Bet = () => {
   useEffect(() => {
     gameResult((value: ReturnValues) => {
       setLoadingBet(false);
-      setResult(value.status)
+      setResult(value.status);
       console.log(value);
     }, wallet);
   }, [wallet]);
 
-  const handleBet = (multiplier: number) => {
-    setLoadingBet(true);
-    setResult('');
+  const handleBet = async (multiplier: number) => {
     if (amount > 0) {
-      placeBet(contractAddress, wallet, multiplier, amount);
+      const status = await placeBet(
+        contractAddress,
+        wallet,
+        multiplier,
+        amount
+      );
+      console.log(status);
+      setMaxAmount(await getMaxBet());
+      setLoadingBet(true);
+      setResult('');
     }
   };
 
@@ -66,7 +73,7 @@ const Bet = () => {
       />
       <button> Place bet </button>
       {loadingBet && <p>Getting result</p>}
-      {result === '' ? <p></p> : <p>{result}</p> }
+      {result === '' ? <p></p> : <p>{result}</p>}
     </form>
   );
 };

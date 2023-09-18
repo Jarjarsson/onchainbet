@@ -1,8 +1,7 @@
-import Web3, { Web3BaseProvider, providers } from 'web3';
+import Web3 from 'web3';
 import abi from '../constants/abi';
 import contractAddress from '../constants/address';
 import { ReturnValues } from '@/app/type';
-import { EventLog } from 'ethers';
 
 const web3 = new Web3(
   'wss://eth-sepolia.g.alchemy.com/v2/ET7Rh8pt9Djc9dEaYvVcxhWd5EtIn3PK'
@@ -79,9 +78,8 @@ const gameResult = (
   address: string
 ) => {
   onChainBet.events.GameResult().on('data', event => {
-    if (event.returnValues.playerAddress === address) {
-      const data: ReturnValues = event.returnValues as ReturnValues
-      console.log(data);
+    const data: ReturnValues = event.returnValues as ReturnValues;
+    if (data.playerAddress.toLowerCase() === address) {
       callback(data);
     }
   });
