@@ -30,7 +30,7 @@ const Demo = () => {
           className="rounded-md"
         />
       </header>
-      <main className="flex gap-2">
+      <main className="flex gap-2 ">
         <p>Bet</p>
         <input
           value={bet}
