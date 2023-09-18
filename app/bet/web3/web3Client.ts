@@ -23,7 +23,7 @@ const placeBet = async (
     from: address,
     to: contractAddress,
     data: onChainBet.methods
-      .placeBet(Number(multiplier).toString(16))
+      .placeBet(multiplier.toString(16))
       .encodeABI(),
     value: Number(ethToWei(amount)).toString(16),
   };
