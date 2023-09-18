@@ -3,6 +3,7 @@ import abi from '../constants/abi';
 import contractAddress from '../constants/address';
 import { ReturnValues } from '@/app/type';
 
+
 const web3 = new Web3(
   'wss://eth-sepolia.g.alchemy.com/v2/ET7Rh8pt9Djc9dEaYvVcxhWd5EtIn3PK'
 );
@@ -22,9 +23,7 @@ const placeBet = async (
   const transactionParameters = {
     from: address,
     to: contractAddress,
-    data: onChainBet.methods
-      .placeBet(multiplier.toString(16))
-      .encodeABI(),
+    data: onChainBet.methods.placeBet(multiplier.toString(16)).encodeABI(),
     value: Number(ethToWei(amount)).toString(16),
   };
   try {
