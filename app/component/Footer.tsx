@@ -14,7 +14,7 @@ const Footer = () => {
             View contract address |
           </a>
         </p>
-        <p>Network: Goerli testnet </p>
+        <p>Network: Sepolia testnet </p>
       </div>
     </footer>
   );

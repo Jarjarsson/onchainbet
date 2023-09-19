@@ -4,7 +4,7 @@
 // 5 times:  10% (0.2*0.5)
 // 10 times : 9% (0.1*0.9)
 
-import { Result } from '../type';
+import { Result } from "../type";
 
 let pool = 0.2;
 let playerBalance = 2;
@@ -19,11 +19,11 @@ const fromRandomNumberToSuccess = (multiplier: number) => {
 
 const playGame = (bet: number, multiplier: number): Result => {
   const prize = bet * multiplier;
-  console.log({prize, pool: pool/12});
-  if (prize > (pool/12)) {
-    return { status: 'Developoors are broke', amount: 0 };
+  console.log({ prize, pool: pool / 12 });
+  if (bet > pool / 12) {
+    return { status: "Developoors are broke", amount: 0 };
   } else if (playerBalance < bet) {
-    return { status: 'Sorry, you are broke', amount: 0 };
+    return { status: "Sorry, you are broke", amount: 0 };
   } else {
     const win = fromRandomNumberToSuccess(multiplier);
     playerBalance -= bet;
@@ -31,9 +31,9 @@ const playGame = (bet: number, multiplier: number): Result => {
     if (win) {
       pool -= prize;
       playerBalance += prize;
-      return { status: 'Congrats!', amount: prize };
+      return { status: "Congrats!", amount: prize };
     }
-    return { status: 'You lost!', amount: 0 };
+    return { status: "You lost!", amount: 0 };
   }
 };
 
