@@ -9,3 +9,9 @@ export type ReturnValues = {
   playerAddress: string;
   status: "Loss" | "Win";
 };
+
+export type HistoryItem = {
+  status: string;
+  amount: number;
+  transaction: string;
+};

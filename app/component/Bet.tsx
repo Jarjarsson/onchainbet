@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import contractAddress from '../bet/constants/address';
-import { useTContext } from '../context/Context';
-import { getMaxBet, placeBet } from '../bet/web3/web3Client';
-import Result from './result';
+import contractAddress from "../bet/constants/address";
+import { useTContext } from "../context/Context";
+import { getMaxBet, placeBet } from "../bet/web3/web3Client";
+import Result from "./result";
+import { HistoryItem } from "../type";
 
 const Bet = () => {
   const [multiplier, setMultiplier] = useState(2);
   const { wallet, setLoadingBet, showResult, setShowResult } = useTContext();
   const [amount, setAmount] = useState(0.000000001);
   const [maxAmount, setMaxAmount] = useState(0);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
   useEffect(() => {
     (async () => {
       setMaxAmount(await getMaxBet());
@@ -35,7 +37,7 @@ const Bet = () => {
     <>
       {!showResult && (
         <form
-          onSubmit={e => {
+          onSubmit={(e) => {
             e.preventDefault();
             handleBet(multiplier);
           }}
@@ -48,7 +50,7 @@ const Bet = () => {
             value={multiplier}
             min={2}
             max={10}
-            onChange={e => setMultiplier(Number(e.target.value))}
+            onChange={(e) => setMultiplier(Number(e.target.value))}
           />
           <label htmlFor="betAmount">Bet Amount (max bet: {maxAmount})</label>
           <input
@@ -56,7 +58,7 @@ const Bet = () => {
             id="betAmount"
             required
             value={amount}
-            onChange={e => setAmount(Number(e.target.value))}
+            onChange={(e) => setAmount(Number(e.target.value))}
             type="number"
             step={0.000000001}
             min={0.000000001}
