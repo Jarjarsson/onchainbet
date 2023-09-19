@@ -3,15 +3,18 @@ export type Result = {
   amount: number;
 };
 
+export type winLoss = 'Loss' | 'Win';
+
 export type ReturnValues = {
   amount: bigint;
   outcome: bigint;
   playerAddress: string;
-  status: "Loss" | "Win";
+  status: winLoss;
 };
 
 export type HistoryItem = {
-  status: string;
+  status: winLoss;
   amount: number;
+  multiplier: number;
   transaction: string;
 };
