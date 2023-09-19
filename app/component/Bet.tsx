@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import contractAddress from "../bet/constants/address";
-import { useTContext } from "../context/Context";
-import { getMaxBet, placeBet } from "../bet/web3/web3Client";
-import Result from "./result";
+import contractAddress from '../bet/constants/address';
+import { useTContext } from '../context/Context';
+import { getMaxBet, placeBet } from '../bet/web3/web3Client';
+import Result from './Result';
+import BettingForm from './BettingForm';
 
 const Bet = () => {
+  const { wallet, setLoadingBet, showResult, setShowResult } = useTContext();
+  const [amount, setAmount] = useState(0);
   const [multiplier, setMultiplier] = useState(2);
-  let { wallet, setLoadingBet, showResult, setShowResult } = useTContext();
-  const [amount, setAmount] = useState(0.000000001);
   const [maxAmount, setMaxAmount] = useState(0);
-  const [tx, setTx] = useState("");
+  const [tx, setTx] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -18,7 +19,9 @@ const Bet = () => {
     })();
   }, []);
 
-  const handleBet = async (multiplier: number) => {
+  const handleBet = async (multiplier: number, amount: number) => {
+    setAmount(amount);
+    setMultiplier(multiplier);
     if (amount > 0) {
       const response = await placeBet(
         contractAddress,
@@ -35,39 +38,11 @@ const Bet = () => {
 
   return (
     <>
-      {!showResult && (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleBet(multiplier);
-          }}
-          className="flex flex-col text-cc3 gap-2"
-        >
-          <label htmlFor="multiplierRange">Multiplier {multiplier}:</label>
-          <input
-            id="multiplierRange"
-            type="range"
-            value={multiplier}
-            min={2}
-            max={10}
-            onChange={(e) => setMultiplier(Number(e.target.value))}
-          />
-          <label htmlFor="betAmount">Bet Amount (max bet: {maxAmount})</label>
-          <input
-            className="text-black"
-            id="betAmount"
-            required
-            value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
-            type="number"
-            step={0.000000001}
-            min={0.000000001}
-            max={maxAmount}
-          />
-          <button> Place bet </button>
-        </form>
+      {showResult ? (
+        <Result amount={amount} transaction={tx} multiplier={multiplier} />
+      ) : (
+        <BettingForm handleBet={handleBet} maxAmount={maxAmount} />
       )}
-      {showResult && <Result amount={amount} transaction={tx} />}
     </>
   );
 };
