@@ -1,8 +1,8 @@
-"use client";
-import { Histogram } from "perf_hooks";
-import React, { useState } from "react";
-import { createContext, useContext } from "react";
-import { HistoryItem } from "../type";
+'use client';
+import React, { useState } from 'react';
+import { createContext, useContext } from 'react';
+import { HistoryItem } from '../type';
+import { storeHistory } from '../utils/utils';
 
 type ContextType = {
   wallet: string;
@@ -14,7 +14,7 @@ type ContextType = {
   showResult: boolean;
   setShowResult: (statuse: boolean) => void;
   history: HistoryItem[];
-  setHistory: (history: HistoryItem[]) => void;
+  setHistory: (items: HistoryItem[]) => void;
 };
 
 type Props = {
@@ -22,7 +22,7 @@ type Props = {
 };
 
 const ContextDefaultValues: ContextType = {
-  wallet: "",
+  wallet: '',
   setWallet: () => {},
   connect: false,
   setConnect: () => {},
@@ -36,11 +36,12 @@ const ContextDefaultValues: ContextType = {
 const TContext = createContext<ContextType>(ContextDefaultValues);
 
 export const TContextProvider = ({ children }: Props) => {
-  const [wallet, setWallet] = useState("");
+  const data = storeHistory();
+  const [wallet, setWallet] = useState('');
   const [connect, setConnect] = useState(false);
   const [loadingBet, setLoadingBet] = useState(false);
   const [showResult, setShowResult] = useState(false);
-  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [history, setHistory] = useState<HistoryItem[]>(data.read());
 
   return (
     <TContext.Provider

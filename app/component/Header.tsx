@@ -1,30 +1,8 @@
 'use client';
-import React, { useEffect } from 'react';
 import Image from 'next/image';
-import { useTContext } from '../context/Context';
-import { checkConnection, connectWallet } from '../bet/web3/web3Client';
-import { cropWallet } from '../bet/utils/utils';
+import Link from 'next/link';
 
 const Header = () => {
-  const { wallet, setWallet } = useTContext();
-  const { connect, setConnect } = useTContext();
-
-  const handleSelectWallet = async () => {
-    await connectWallet().then(res => {
-      setWallet(res.address);
-      setConnect(true);
-    });
-  };
-
-  useEffect(() => {
-    (async () => {
-      await checkConnection(setWallet);
-      if (wallet !== '') {
-        setConnect(true);
-      }
-    })();
-  }, [wallet, setWallet, setConnect]);
-
   return (
     <header className="flex justify-between px-8 py-2 items-center ">
       <Image
@@ -34,19 +12,20 @@ const Header = () => {
         height={80}
         className="rounded-md"
       />
-      {!connect && (
-        <button
-          onClick={handleSelectWallet}
-          className=" px-2 py-1 font-semibold text-cc3 bg-cc3/50 rounded-md h-2/3"
+      <nav className="flex gap-3">
+        <Link
+          href={'/'}
+          className="text-cc3 text-xl font-semibold bg-cc3/50 px-3 py-2 rounded-lg"
         >
-          Connect wallet
-        </button>
-      )}
-      {connect && (
-        <p className="px-2 py-1 font-semibold text-cc3 bg-cc3/50 rounded-md h-2/3">
-          {wallet !== '' && cropWallet(wallet)}
-        </p>
-      )}
+          HOME
+        </Link>
+        <Link
+          href={'/demo'}
+          className="text-cc3 text-xl font-semibold bg-cc3/50 px-3 py-2 rounded-lg"
+        >
+          DEMO
+        </Link>
+      </nav>
     </header>
   );
 };

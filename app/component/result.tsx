@@ -1,34 +1,30 @@
-import { HistoryItem, ReturnValues } from "@/app/type";
-import React, { useEffect, useState } from "react";
-import { gameResult, weiToEth } from "../bet/web3/web3Client";
-import { useTContext } from "@/app/context/Context";
+import { ReturnValues } from '@/app/type';
+import React, { useState } from 'react';
+import { gameResult, weiToEth } from '../bet/web3/web3Client';
+import { useTContext } from '@/app/context/Context';
+import { storeHistory } from '../utils/utils';
 
-type Prop = {
+type ResultProp = {
   amount: number;
   transaction: string;
+  multiplier: number;
 };
 
-const Result = ({ amount, transaction }: Prop) => {
-  let {
-    wallet,
-    setLoadingBet,
-    loadingBet,
-    setShowResult,
-    setHistory,
-    history,
-  } = useTContext();
-  const [result, setResult] = useState("");
+const Result = ({ amount, transaction, multiplier }: ResultProp) => {
+  const { wallet, setLoadingBet, loadingBet, setShowResult, setHistory } =
+    useTContext();
+  const [result, setResult] = useState('');
   const [prize, setPrize] = useState(0);
-  useEffect(() => {
-    gameResult((value: ReturnValues) => {
-      setLoadingBet(false);
-      setResult(value.status);
-      setPrize(weiToEth(Number(value.amount)));
-      const data = { amount, transaction, status: value.status };
-      setHistory([...history, data]);
-      console.log(history);
-    }, wallet);
-  }, [wallet, setLoadingBet]);
+  const history = storeHistory();
+
+  gameResult((value: ReturnValues) => {
+    setLoadingBet(false);
+    setResult(value.status);
+    setPrize(weiToEth(Number(value.amount)));
+    const data = { amount, transaction, multiplier, status: value.status };
+    history.update(data);
+    setHistory(history.read());
+  }, wallet);
 
   const handlePlayAgain = () => {
     setShowResult(false);
@@ -36,9 +32,8 @@ const Result = ({ amount, transaction }: Prop) => {
 
   return (
     <div>
-      {" "}
       {loadingBet && <p className="text-cc3">Getting result</p>}
-      {result === "" ? (
+      {result === '' ? (
         <p></p>
       ) : (
         <div>
