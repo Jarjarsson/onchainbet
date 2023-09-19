@@ -1,9 +1,3 @@
-// double : 45%  (0.5*0.9)
-// Triple:  30%  (0.3*1)
-// 4 times : 20% (0.5*0.4)
-// 5 times:  10% (0.2*0.5)
-// 10 times : 9% (0.1*0.9)
-
 import { Result } from "../type";
 
 let pool = 0.2;
