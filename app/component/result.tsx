@@ -1,10 +1,22 @@
-import { ReturnValues } from "@/app/type";
+import { HistoryItem, ReturnValues } from "@/app/type";
 import React, { useEffect, useState } from "react";
 import { gameResult, weiToEth } from "../bet/web3/web3Client";
 import { useTContext } from "@/app/context/Context";
 
-const Result = () => {
-  const { wallet, setLoadingBet, loadingBet, setShowResult } = useTContext();
+type Prop = {
+  amount: number;
+  transaction: string;
+};
+
+const Result = ({ amount, transaction }: Prop) => {
+  let {
+    wallet,
+    setLoadingBet,
+    loadingBet,
+    setShowResult,
+    setHistory,
+    history,
+  } = useTContext();
   const [result, setResult] = useState("");
   const [prize, setPrize] = useState(0);
   useEffect(() => {
@@ -12,7 +24,9 @@ const Result = () => {
       setLoadingBet(false);
       setResult(value.status);
       setPrize(weiToEth(Number(value.amount)));
-      console.log(value);
+      const data = { amount, transaction, status: value.status };
+      setHistory([...history, data]);
+      console.log(history);
     }, wallet);
   }, [wallet, setLoadingBet]);
 

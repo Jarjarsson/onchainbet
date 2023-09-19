@@ -4,14 +4,14 @@ import contractAddress from "../bet/constants/address";
 import { useTContext } from "../context/Context";
 import { getMaxBet, placeBet } from "../bet/web3/web3Client";
 import Result from "./result";
-import { HistoryItem } from "../type";
 
 const Bet = () => {
   const [multiplier, setMultiplier] = useState(2);
-  const { wallet, setLoadingBet, showResult, setShowResult } = useTContext();
+  let { wallet, setLoadingBet, showResult, setShowResult } = useTContext();
   const [amount, setAmount] = useState(0.000000001);
   const [maxAmount, setMaxAmount] = useState(0);
-  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [tx, setTx] = useState("");
+
   useEffect(() => {
     (async () => {
       setMaxAmount(await getMaxBet());
@@ -20,13 +20,13 @@ const Bet = () => {
 
   const handleBet = async (multiplier: number) => {
     if (amount > 0) {
-      const status = await placeBet(
+      const response = await placeBet(
         contractAddress,
         wallet,
         multiplier,
         amount
       );
-      console.log(status);
+      setTx(response.tx);
       setMaxAmount(await getMaxBet());
       setLoadingBet(true);
       setShowResult(true);
@@ -67,7 +67,7 @@ const Bet = () => {
           <button> Place bet </button>
         </form>
       )}
-      {showResult && <Result />}
+      {showResult && <Result amount={amount} transaction={tx} />}
     </>
   );
 };

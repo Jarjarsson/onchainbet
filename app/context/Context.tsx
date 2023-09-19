@@ -1,6 +1,8 @@
 "use client";
+import { Histogram } from "perf_hooks";
 import React, { useState } from "react";
 import { createContext, useContext } from "react";
+import { HistoryItem } from "../type";
 
 type ContextType = {
   wallet: string;
@@ -11,6 +13,8 @@ type ContextType = {
   setLoadingBet: (statuse: boolean) => void;
   showResult: boolean;
   setShowResult: (statuse: boolean) => void;
+  history: HistoryItem[];
+  setHistory: (history: HistoryItem[]) => void;
 };
 
 type Props = {
@@ -26,6 +30,8 @@ const ContextDefaultValues: ContextType = {
   setLoadingBet: () => {},
   showResult: false,
   setShowResult: () => {},
+  history: [],
+  setHistory: () => {},
 };
 const TContext = createContext<ContextType>(ContextDefaultValues);
 
@@ -34,6 +40,7 @@ export const TContextProvider = ({ children }: Props) => {
   const [connect, setConnect] = useState(false);
   const [loadingBet, setLoadingBet] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
 
   return (
     <TContext.Provider
@@ -46,6 +53,8 @@ export const TContextProvider = ({ children }: Props) => {
         setLoadingBet,
         showResult,
         setShowResult,
+        history,
+        setHistory,
       }}
     >
       {children}

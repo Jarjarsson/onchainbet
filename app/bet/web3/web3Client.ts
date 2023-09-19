@@ -31,11 +31,13 @@ const placeBet = async (
       params: [transactionParameters],
     });
     return {
-      status: "Success! Transaction hash: " + txHash,
+      status: "Success!",
+      tx: txHash,
     };
   } catch (error) {
     return {
       status: "Something went wrong",
+      tx: "",
     };
   }
 };
@@ -84,10 +86,12 @@ const gameResult = (
 };
 
 export const checkConnection = async (cb: (account: string) => void) => {
-  const accounts = await (window as any).ethereum.request({ method: 'eth_accounts' });
-  if(accounts.length ==! 0){
-    cb(accounts[0])
+  const accounts = await (window as any).ethereum.request({
+    method: "eth_accounts",
+  });
+  if (accounts.length == !0) {
+    cb(accounts[0]);
   }
-}
+};
 
 export { placeBet, connectWallet, getMaxBet, ethToWei, gameResult, weiToEth };
