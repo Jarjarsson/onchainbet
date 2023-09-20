@@ -1,6 +1,6 @@
 import { Result } from "../type";
 
-let pool = 0.2;
+let pool = 2;
 let playerBalance = 2;
 
 const getPlayerBalance = () => playerBalance;
