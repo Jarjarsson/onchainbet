@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import contractAddress from '../bet/constants/address';
 import { useTContext } from '../context/Context';
 import { getMaxBet, placeBet } from '../bet/web3/web3Client';
-import Result from './Result';
+import BettingResult from './BettingResult';
 import BettingForm from './BettingForm';
 
 const Bet = () => {
@@ -39,7 +39,7 @@ const Bet = () => {
   return (
     <>
       {showResult ? (
-        <Result amount={amount} transaction={tx} multiplier={multiplier} />
+        <BettingResult amount={amount} transaction={tx} multiplier={multiplier} />
       ) : (
         <BettingForm handleBet={handleBet} maxAmount={maxAmount} />
       )}

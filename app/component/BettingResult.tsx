@@ -10,7 +10,7 @@ type ResultProp = {
   multiplier: number;
 };
 
-const Result = ({ amount, transaction, multiplier }: ResultProp) => {
+const BettingResult = ({ amount, transaction, multiplier }: ResultProp) => {
   const { wallet, setLoadingBet, loadingBet, setShowResult, setHistory } =
     useTContext();
   const [result, setResult] = useState('');
@@ -52,4 +52,4 @@ const Result = ({ amount, transaction, multiplier }: ResultProp) => {
   );
 };
 
-export default Result;
+export default BettingResult;
