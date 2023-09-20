@@ -1,4 +1,4 @@
-import { HistoryItem, Result } from "../type";
+import { HistoryItem } from '../type';
 
 export const cropWallet = (wallet: string) =>
   `${wallet.substring(0, 4)}...${wallet.substring(
@@ -7,7 +7,7 @@ export const cropWallet = (wallet: string) =>
   )}`;
 
 export const storeHistory = () => {
-  const key = "bettingHistory";
+  const key = 'bettingHistory';
   const update = (item: HistoryItem) => {
     localStorage.setItem(key, JSON.stringify([...read(), item]));
   };
