@@ -14,21 +14,16 @@ const fromRandomNumberToSuccess = (multiplier: number) => {
 const playGame = (bet: number, multiplier: number): Result => {
   const prize = bet * multiplier;
   console.log({ prize, pool: pool / 12 });
-  if (bet > pool / 12) {
-    return { status: "Developoors are broke", amount: 0 };
-  } else if (playerBalance < bet) {
-    return { status: "Sorry, you are broke", amount: 0 };
-  } else {
-    const win = fromRandomNumberToSuccess(multiplier);
-    playerBalance -= bet;
-    pool += bet;
-    if (win) {
-      pool -= prize;
-      playerBalance += prize;
-      return { status: "Congrats!", amount: prize };
-    }
-    return { status: "You lost!", amount: 0 };
+
+  const win = fromRandomNumberToSuccess(multiplier);
+  playerBalance -= bet;
+  pool += bet;
+  if (win) {
+    pool -= prize;
+    playerBalance += prize;
+    return { status: "Win", amount: prize };
   }
+  return { status: "Loss", amount: 0 };
 };
 
 export { playGame, getPlayerBalance, getPool };

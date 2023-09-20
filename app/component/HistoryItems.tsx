@@ -1,5 +1,5 @@
-import React from 'react';
-import { HistoryItem } from '../type';
+import React from "react";
+import { HistoryItem, Result } from "../type";
 
 type Prop = {
   history: HistoryItem[];
@@ -7,21 +7,24 @@ type Prop = {
 
 const History = ({ history }: Prop) => {
   return (
-    <ul className="flex flex-col text-cc3 border-cc3 border-2 rounded-md">
-      {history.map(h => (
+    <ul className="flex flex-col text-cc1 bg-cc3/30  rounded-md text-xs">
+      {history.map((h) => (
         <li
-          className="flex border-b-2 p-2 last:border-none gap-5"
+          className="flex flex-col border-b-2 p-2 last:border-none gap-none"
           key={h.transaction}
         >
           <p>
-            {h.status === 'Loss'
+            {h.status === "Loss"
               ? `You lost ${h.amount} ETH`
               : `You won ${h.amount * h.multiplier} ETH `}
-            -{' '}
-            <a href={`https://sepolia.etherscan.io/tx/${h.transaction}`}>
-              Transaction
-            </a>
+            -{" "}
           </p>
+          <a
+            className="text-cc1/50 hover:text-cc3"
+            href={`https://sepolia.etherscan.io/tx/${h.transaction}`}
+          >
+            Transaction
+          </a>
         </li>
       ))}
     </ul>

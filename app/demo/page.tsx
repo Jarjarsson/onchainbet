@@ -1,14 +1,19 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { playGame, getPlayerBalance, getPool } from './backend';
-import Image from 'next/image';
-import BettingForm from '../component/BettingForm';
-import Link from 'next/link';
+"use client";
+import { useEffect, useState } from "react";
+import { playGame, getPlayerBalance, getPool } from "./backend";
+import Image from "next/image";
+import BettingForm from "../component/BettingForm";
+import Link from "next/link";
+import HistoryExpand from "../component/HistoryExpand";
+import { HistoryItem, Result } from "../type";
+import { storeHistory } from "../utils/utils";
 
 const Demo = () => {
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState("");
   const [playerbalance, setPlayerbalance] = useState(0);
   const [showResult, setShowResult] = useState(false);
+  const [demoHis, setDemoHis] = useState<HistoryItem[]>([]);
+  const history = storeHistory();
 
   useEffect(() => {
     setPlayerbalance(getPlayerBalance());
@@ -19,6 +24,9 @@ const Demo = () => {
     setStatus(r.status);
     setPlayerbalance(getPlayerBalance());
     setShowResult(true);
+    const data: HistoryItem = { ...r, multiplier, transaction: "" };
+    history.update(data);
+    setDemoHis(history.read());
   };
 
   const handlePlayAgain = () => {
@@ -37,13 +45,13 @@ const Demo = () => {
         />
         <nav className="flex gap-3">
           <Link
-            href={'/'}
+            href={"/"}
             className="text-cc3 text-xl font-semibold bg-cc3/50 px-3 py-2 rounded-lg"
           >
             HOME
           </Link>
           <Link
-            href={'/bet'}
+            href={"/bet"}
             className="text-cc3 text-xl font-semibold bg-cc3/50 px-3 py-2 rounded-lg"
           >
             BET
@@ -51,17 +59,15 @@ const Demo = () => {
         </nav>
       </header>
 
-      <main className="flex grow">
-        <section className="flex flex-col w-1/4 items-center gap-3">
-          <p className="px-2 py-1 font-semibold text-cc3 bg-cc3/50 rounded-md w-3/4 text-sm">
+      <main className="flex grow w-screen">
+        <section className="flex flex-col w-1/4  gap-3 px-4">
+          <p className="px-2 py-1 font-semibold text-cc3 bg-cc3/50 rounded-md  text-sm">
             Your Balance: <br></br>
             {playerbalance}
           </p>
-          <p className="px-2 py-1 font-semibold text-cc3 bg-cc3/50 rounded-md w-3/4 text-sm">
-            History
-          </p>
+          <HistoryExpand history={demoHis} />
         </section>
-        <section className='flex flex-col justify-center items-center w-3/4'>
+        <section className="flex flex-col justify-center items-center w-3/4">
           {!showResult && (
             <BettingForm handleBet={handleBet} maxAmount={getPool() / 12} />
           )}

@@ -1,9 +1,9 @@
 export type Result = {
-  status: string;
+  status: winLoss;
   amount: number;
 };
 
-export type winLoss = 'Loss' | 'Win';
+export type winLoss = "Loss" | "Win";
 
 export type ReturnValues = {
   amount: bigint;
