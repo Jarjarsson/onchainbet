@@ -13,7 +13,6 @@ const fromRandomNumberToSuccess = (multiplier: number) => {
 
 const playGame = (bet: number, multiplier: number): Result => {
   const prize = bet * multiplier;
-  console.log({ prize, pool: pool / 12 });
 
   const win = fromRandomNumberToSuccess(multiplier);
   playerBalance -= bet;
@@ -21,9 +20,9 @@ const playGame = (bet: number, multiplier: number): Result => {
   if (win) {
     pool -= prize;
     playerBalance += prize;
-    return { status: "Win", amount: prize };
+    return { status: "Win", amount: bet };
   }
-  return { status: "Loss", amount: 0 };
+  return { status: "Loss", amount: bet };
 };
 
 export { playGame, getPlayerBalance, getPool };

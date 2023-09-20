@@ -5,15 +5,14 @@ import Image from "next/image";
 import BettingForm from "../component/BettingForm";
 import Link from "next/link";
 import HistoryExpand from "../component/HistoryExpand";
-import { HistoryItem, Result } from "../type";
-import { storeHistory } from "../utils/utils";
+import { HistoryItem } from "../type";
 
 const Demo = () => {
   const [status, setStatus] = useState("");
   const [playerbalance, setPlayerbalance] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [demoHis, setDemoHis] = useState<HistoryItem[]>([]);
-  const history = storeHistory();
+  
 
   useEffect(() => {
     setPlayerbalance(getPlayerBalance());
@@ -25,8 +24,7 @@ const Demo = () => {
     setPlayerbalance(getPlayerBalance());
     setShowResult(true);
     const data: HistoryItem = { ...r, multiplier, transaction: "" };
-    history.update(data);
-    setDemoHis(history.read());
+    setDemoHis([...demoHis, data]);
   };
 
   const handlePlayAgain = () => {
@@ -65,7 +63,7 @@ const Demo = () => {
             Your Balance: <br></br>
             {playerbalance}
           </p>
-          <HistoryExpand history={demoHis} />
+          <HistoryExpand history={demoHis} clear={() => setDemoHis([])} />
         </section>
         <section className="flex flex-col justify-center items-center w-3/4">
           {!showResult && (

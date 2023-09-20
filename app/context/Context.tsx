@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { createContext, useContext } from "react";
-import { HistoryItem, Result } from "../type";
+import { HistoryItem } from "../type";
 import { storeHistory } from "../utils/utils";
 
 type ContextType = {
