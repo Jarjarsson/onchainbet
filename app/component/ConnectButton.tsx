@@ -25,13 +25,13 @@ const ConnectButton = () => {
   return (
     <>
       {connect ? (
-        <p className="px-2 py-1 font-semibold text-cc3 bg-cc3/50 rounded-md">
+        <p className="px-2 py-2 font-semibold text-cc2 bg-cc3/20 rounded-md select-none">
           Wallet : {wallet !== '' && cropWallet(wallet)}
         </p>
       ) : (
         <button
           onClick={handleSelectWallet}
-          className=" px-2 py-1 font-semibold text-cc3 bg-cc3/50 rounded-md h-2/3"
+          className="px-2 py-2 font-semibold text-cc2 bg-cc3/20 rounded-md select-none"
         >
           Connect wallet
         </button>

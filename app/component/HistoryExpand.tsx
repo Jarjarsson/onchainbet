@@ -8,22 +8,22 @@ type Prop = {
 };
 
 const HistoryExpand = ({ history, clear }: Prop) => {
-  const [expand, setExpand] = useState(false);
+  const [expand, setExpand] = useState(true);
   const handleExpand = () => {
     setExpand(!expand);
   };
   return (
-    <section>
-      <p
-        className={`px-2 py-1 font-semibold text-cc3 hover:bg-cc3/20  ${
+    <>
+      <div
+        className={`flex justify-between items-center hover:cursor-pointer px-2 py-1 font-semibold text-cc3 hover:bg-cc3/20  ${
           expand ? 'rounded-t-md bg-cc3/20' : 'rounded-md bg-cc3/50'
         }`}
         onClick={handleExpand}
       >
-        Betting History
-      </p>
-      {expand && history.length !== 0 && (
-        <section className="flex flex-col gap-2 bg-cc3/50 p-2 rounded-b-md">
+        <p>Betting History</p>
+      </div>
+      {expand && (
+        <div className="flex flex-col gap-2 bg-cc3/50 p-2 rounded-b-md">
           <History history={history} />
           <div className="flex justify-between">
             <p className="text-cc1 bg-cc3 p-1 text-sm rounded-md">
@@ -33,7 +33,7 @@ const HistoryExpand = ({ history, clear }: Prop) => {
                   next.status === 'Win'
                     ? next.amount * next.multiplier
                     : -next.amount);
-              }, 0)}
+              }, 0).toFixed(5)}
             </p>
             <button
               className="text-cc1 bg-cc3 p-1 text-sm rounded-md hover:bg-cc2/50"
@@ -44,9 +44,9 @@ const HistoryExpand = ({ history, clear }: Prop) => {
               Clear
             </button>
           </div>
-        </section>
+        </div>
       )}
-    </section>
+    </>
   );
 };
 

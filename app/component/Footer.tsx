@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-cc3/30 flex justify-around text-cc1/60 items-center p-2  ">
+    <footer className="bg-cc3/30 flex justify-between text-cc1/60 items-center px-5 py-2  ">
       <p className="items-center">Copyright | Developoors | 2023</p>
 
       <div className="flex gap-2">
@@ -14,7 +14,7 @@ const Footer = () => {
             View contract address |
           </a>
         </p>
-        <p>Network: Sepolia testnet </p>
+        <p>Network: Sepolia Testnet </p>
       </div>
     </footer>
   );
