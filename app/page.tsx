@@ -1,24 +1,10 @@
 import Link from "next/link";
-import Image from "next/image";
+import Header from "./component/Header";
 
 export default function Home() {
   return (
     <>
-      <header className="flex justify-between px-8 py-2 items-center ">
-        <Image
-          src="/logo.png"
-          alt="logo"
-          width={80}
-          height={80}
-          className="rounded-md"
-        />
-        <Link
-            href={"/demo"}
-            className="text-cc3 text-xl font-semibold bg-cc3/50 px-3 py-2 rounded-lg"
-          >
-            Try Demo
-          </Link>
-      </header>
+    <Header links={[{name: 'Try Demo', url: '/demo'}]}/>
       <main>
         <div className="flex flex-col gap-10 justify-center items-center text-cc3 ">
           <h1 className="text-6xl font-semibold px-4 text-center">OnChainBet</h1>
@@ -27,7 +13,7 @@ export default function Home() {
             href={"/bet"}
             className="text-4xl font-bold bg-cc2 px-3 py-2 rounded-lg text-cc1 shadow-xl"
           >
-            BET
+            BET on the blockchain
           </Link>
           
         </div>
