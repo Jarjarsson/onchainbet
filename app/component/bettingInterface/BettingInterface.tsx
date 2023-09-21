@@ -1,9 +1,10 @@
 import { SelectMultiplier } from './SelectMultiplier';
 import { DisplayNumber } from './DisplayNumber';
 import { useState } from 'react';
+import { Result } from '@/app/type';
 
 type Prop = {
-  handleBet: (multiplier: number, amount: number) => Promise<void>;
+  handleBet: (multiplier: number, amount: number) => Promise<Result>;
   maxAmount: number;
 };
 
@@ -11,11 +12,10 @@ const BettingInterface = ({ handleBet, maxAmount }: Prop) => {
   const [multiplier, setMultiplier] = useState(2);
   const [amount, setAmount] = useState(1);
   const [activeNumber, setActiveNumber] = useState(1);
-  const [timeout, setTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const start = () => {
     setActiveNumber(1);
-    const intervalB = setInterval(() => {
+    const timerId = setInterval(() => {
       setActiveNumber(prevNumber => {
         if (prevNumber === 100) {
           return 1;
@@ -23,28 +23,56 @@ const BettingInterface = ({ handleBet, maxAmount }: Prop) => {
         return prevNumber + 1;
       });
     }, 50);
-    setTimeout(intervalB);
+    return timerId;
   };
-  const stop = () => {
-    if (timeout) {
-      clearInterval(timeout);
+
+  const stop = (timerId: NodeJS.Timeout) => {
+    clearInterval(timerId);
+  };
+
+  const slowDown = (number: number) => {
+    const diff = getDiff(activeNumber, number);
+    if (diff > 20) {
+      // loop diff - 20 times
+    } else {
+      // keep going for 100 + diff - 20 number of times at full speed
     }
+  
+    // loop 20 times with increasing wait time;
+    
+    // [...Array(10).keys()].map(i => 50+i*50)
+    const linear = (endpoint: number) => {
+      let arr = [];
+      for (let i = 1; i <= endpoint; i++) {
+        arr.push(i * 50);
+      }
+      return arr;
+    };
+    linear(10).map(t => {
+      const tId = start();
+      setTimeout(() => {
+        stop(tId);
+      }, t);
+    });
   };
 
-  const onResult = (result: number) => {
-    stop();
-    setActiveNumber(result);
-    // show win/loss animation;
-  };
+  const getDiff = (current: number, target: number) =>
+    (target - current + 100) % 100;
 
-  const slowDown = (current: number, winNumber: number) => {};
+  const onBet = async () => {
+    const t = start();
+    const data = await handleBet(multiplier, amount);
+    const { number } = data;
+    stop(t);
+    slowDown(number);
+  };
 
   return (
     <section>
       <form
-        onSubmit={() => {
-          start();
-          handleBet(multiplier, amount);
+        onSubmit={e => {
+          e.preventDefault();
+          onBet();
         }}
       >
         <label htmlFor="multiplierRange">Bet Amount </label>
@@ -80,10 +108,12 @@ const BettingInterface = ({ handleBet, maxAmount }: Prop) => {
               key={i + 'grid'}
               num={i + 1}
               winnable={88 / multiplier < i + 1}
-              active={activeNumber === i}
+              active={activeNumber === i + 1}
             />
           ))}
         </ul>
+        <button onClick={start}>start</button>
+        {/* <button onClick={}>stop</button> */}
       </div>
     </section>
   );

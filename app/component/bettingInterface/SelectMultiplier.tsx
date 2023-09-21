@@ -14,7 +14,7 @@ const SelectMultiplier = ({
   };
   return (
     <button onClick={handleMultiplier}>
-      Win : {betAmount * multiplier} ETH
+      Win : {(betAmount * multiplier).toFixed(5)} ETH
     </button>
   );
 };
