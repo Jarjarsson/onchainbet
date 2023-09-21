@@ -1,10 +1,11 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { playGame, getPlayerBalance, getPool } from './backend';
-import BettingForm from '../component/BettingForm';
+
 import HistoryExpand from '../component/HistoryExpand';
 import { HistoryItem } from '../type';
 import Header from '../component/Header';
+import BettingInterface from '../component/bettingInterface/BettingInterface';
 
 const Demo = () => {
   const [status, setStatus] = useState('');
@@ -38,7 +39,7 @@ const Demo = () => {
       </Header>
 
       <main className="flex justify-center items-center grow lg:flex-col lg:gap-10">
-        <section className="'w-2/3">
+        {/* <section className="'w-2/3">
           {!showResult && (
             <BettingForm handleBet={handleBet} maxAmount={getPool() / 12} />
           )}
@@ -48,10 +49,11 @@ const Demo = () => {
               <button onClick={handlePlayAgain}>Play Again</button>
             </div>
           )}
-        </section>
+        </section> */}
         <section className="w-1/3 self-start lg:self-center lg:w-2/3">
           <HistoryExpand history={demoHis} clear={() => setDemoHis([])} />
         </section>
+        <BettingInterface handleBet={handleBet} maxAmount={getPool() / 12} />
       </main>
     </>
   );
