@@ -13,58 +13,68 @@ const BettingInterface = ({ handleBet, maxAmount }: Prop) => {
   const [amount, setAmount] = useState(1);
   const [activeNumber, setActiveNumber] = useState(1);
 
-  const start = () => {
-    setActiveNumber(1);
+  const counter = () => {
+    let counter = 0;
+    const increase = () => {
+      if (counter === 100) {
+        counter = 0;
+      }
+      counter++;
+      setActiveNumber(counter);
+    };
+    const getCounter = () => counter;
+    const setCounter = (number: number) => {
+      counter = number;
+    };
+    return { increase, getCounter, setCounter };
+  };
+  const count = counter();
+
+  const start = (startNumber: number) => {
+    count.setCounter(startNumber);
     const timerId = setInterval(() => {
-      setActiveNumber(prevNumber => {
-        if (prevNumber === 100) {
-          return 1;
-        }
-        return prevNumber + 1;
-      });
+      count.increase();
     }, 50);
     return timerId;
   };
+
+  const runNTimes = (arr: number[]) =>
+    arr.reduce((acc, cur) => {
+      setTimeout(() => {
+        count.increase();
+      }, cur + acc);
+      return cur + acc;
+    });
 
   const stop = (timerId: NodeJS.Timeout) => {
     clearInterval(timerId);
   };
 
-  const slowDown = (number: number) => {
-    const diff = getDiff(activeNumber, number);
+  const retard = (len: number) =>
+    [...Array(len).keys()].map(i => 50 + i * 1.15 * 15);
+
+  const slowDown = (number: number, timeoutId: NodeJS.Timeout) => {
+    stop(timeoutId);
+    const diff = getDiff(count.getCounter(), number);
+    let loopDuration: number;
     if (diff > 20) {
-      // loop diff - 20 times
+      loopDuration = runNTimes(Array(diff - 20).fill(50));
     } else {
-      // keep going for 100 + diff - 20 number of times at full speed
+      loopDuration = runNTimes(Array(diff + 80).fill(50));
     }
-  
-    // loop 20 times with increasing wait time;
-    
-    // [...Array(10).keys()].map(i => 50+i*50)
-    const linear = (endpoint: number) => {
-      let arr = [];
-      for (let i = 1; i <= endpoint; i++) {
-        arr.push(i * 50);
-      }
-      return arr;
-    };
-    linear(10).map(t => {
-      const tId = start();
-      setTimeout(() => {
-        stop(tId);
-      }, t);
-    });
+    setTimeout(() => {
+      const durs = retard(22);
+      runNTimes(durs);
+    }, loopDuration);
   };
 
   const getDiff = (current: number, target: number) =>
     (target - current + 100) % 100;
 
   const onBet = async () => {
-    const t = start();
-    const data = await handleBet(multiplier, amount);
-    const { number } = data;
-    stop(t);
-    slowDown(number);
+    const t = start(1);
+    const { number } = await handleBet(multiplier, amount);
+    slowDown(number, t);
   };
 
   return (
@@ -76,7 +86,6 @@ const BettingInterface = ({ handleBet, maxAmount }: Prop) => {
         }}
       >
         <label htmlFor="multiplierRange">Bet Amount </label>
-
         <input
           id="multiplierRange"
           type="range"
@@ -112,8 +121,6 @@ const BettingInterface = ({ handleBet, maxAmount }: Prop) => {
             />
           ))}
         </ul>
-        <button onClick={start}>start</button>
-        {/* <button onClick={}>stop</button> */}
       </div>
     </section>
   );
