@@ -2,6 +2,8 @@ import { SelectMultiplier } from './SelectMultiplier';
 import { DisplayNumber } from './DisplayNumber';
 import { useState } from 'react';
 import { Result } from '@/app/type';
+import { animator } from '@/app/utils/utils';
+
 
 type Prop = {
   handleBet: (multiplier: number, amount: number) => Promise<Result>;
@@ -13,69 +15,14 @@ const BettingInterface = ({ handleBet, maxAmount }: Prop) => {
   const [amount, setAmount] = useState(1);
   const [activeNumber, setActiveNumber] = useState(1);
 
-  const counter = () => {
-    let counter = 0;
-    const increase = () => {
-      if (counter === 100) {
-        counter = 0;
-      }
-      counter++;
-      setActiveNumber(counter);
-    };
-    const getCounter = () => counter;
-    const setCounter = (number: number) => {
-      counter = number;
-    };
-    return { increase, getCounter, setCounter };
-  };
-  const count = counter();
-
-  const start = (startNumber: number) => {
-    count.setCounter(startNumber);
-    const timerId = setInterval(() => {
-      count.increase();
-    }, 50);
-    return timerId;
-  };
-
-  const runNTimes = (arr: number[]) =>
-    arr.reduce((acc, cur) => {
-      setTimeout(() => {
-        count.increase();
-      }, cur + acc);
-      return cur + acc;
-    });
-
-  const stop = (timerId: NodeJS.Timeout) => {
-    clearInterval(timerId);
-  };
-
-  const retard = (len: number) =>
-    [...Array(len).keys()].map(i => 50 + i * 1.15 * 15);
-
-  const slowDown = (number: number, timeoutId: NodeJS.Timeout) => {
-    stop(timeoutId);
-    const diff = getDiff(count.getCounter(), number);
-    let loopDuration: number;
-    if (diff > 20) {
-      loopDuration = runNTimes(Array(diff - 20).fill(50));
-    } else {
-      loopDuration = runNTimes(Array(diff + 80).fill(50));
-    }
-    setTimeout(() => {
-      const durs = retard(22);
-      runNTimes(durs);
-    }, loopDuration);
-  };
-
-  const getDiff = (current: number, target: number) =>
-    (target - current + 100) % 100;
+  const animation = animator(setActiveNumber)
 
   const onBet = async () => {
-    const t = start(1);
+    const t = animation.start(1);
     const { number } = await handleBet(multiplier, amount);
-    slowDown(number, t);
+    animation.slowDown(number, t);
   };
+
 
   return (
     <section>
