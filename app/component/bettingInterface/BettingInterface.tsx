@@ -1,34 +1,29 @@
 import { SelectMultiplier } from './SelectMultiplier';
 import { DisplayNumber } from './DisplayNumber';
 import { useState } from 'react';
-import { Result } from '@/app/type';
+import { Result, ReturnValues } from '@/app/type';
 import { animator } from '@/app/utils/utils';
-import { gameResult } from '@/app/bet/web3/web3Client';
-import { useTContext } from '@/app/context/Context';
-
 
 type Prop = {
-  handleBet: (multiplier: number, amount: number) => Promise<Result>;
+  handleBet: (multiplier: number, amount: number) => Promise<void>;
   maxAmount: number;
+  handleResult: (cb: (number: ReturnValues) => void) => void;
 };
 
-const BettingInterface = ({ handleBet, maxAmount }: Prop) => {
+const BettingInterface = ({ handleBet, maxAmount, handleResult }: Prop) => {
   const [multiplier, setMultiplier] = useState(2);
   const [amount, setAmount] = useState(1);
   const [activeNumber, setActiveNumber] = useState(1);
-  const { wallet } = useTContext();
 
-  const animation = animator(setActiveNumber)
+  const animation = animator(setActiveNumber);
 
   const onBet = async () => {
+    await handleBet(multiplier, amount);
     const t = animation.start(1);
-    const { number } = await handleBet(multiplier, amount);
-    animation.slowDown(number, t);
-    gameResult(() => {
-      animation.slowDown(number, t)
-    }, wallet)
+    handleResult((number: ReturnValues) => {
+      animation.slowDown(Number(number.outcome), t);
+    });
   };
-
 
   return (
     <section>
