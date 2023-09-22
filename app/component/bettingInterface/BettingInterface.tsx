@@ -3,6 +3,8 @@ import { DisplayNumber } from './DisplayNumber';
 import { useState } from 'react';
 import { Result } from '@/app/type';
 import { animator } from '@/app/utils/utils';
+import { gameResult } from '@/app/bet/web3/web3Client';
+import { useTContext } from '@/app/context/Context';
 
 
 type Prop = {
@@ -14,6 +16,7 @@ const BettingInterface = ({ handleBet, maxAmount }: Prop) => {
   const [multiplier, setMultiplier] = useState(2);
   const [amount, setAmount] = useState(1);
   const [activeNumber, setActiveNumber] = useState(1);
+  const { wallet } = useTContext();
 
   const animation = animator(setActiveNumber)
 
@@ -21,6 +24,9 @@ const BettingInterface = ({ handleBet, maxAmount }: Prop) => {
     const t = animation.start(1);
     const { number } = await handleBet(multiplier, amount);
     animation.slowDown(number, t);
+    gameResult(() => {
+      animation.slowDown(number, t)
+    }, wallet)
   };
 
 
