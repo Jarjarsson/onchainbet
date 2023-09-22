@@ -13,7 +13,7 @@ export default function Home() {
             href={"/bet"}
             className="text-4xl font-bold bg-cc2 px-3 py-2 rounded-lg text-cc1 shadow-xl"
           >
-            BET on the blockchain
+            Launch app
           </Link>
           
         </div>
