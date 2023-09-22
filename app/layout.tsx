@@ -1,10 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import { TContextProvider } from './context/Context';
 import Footer from './component/Footer';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'OnChainBet',
@@ -19,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="flex justify-center">
       <body className="bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-cc1 to-cc2 w-screen h-screen flex flex-col justify-between lg:max-w-5xl">
-        <TContextProvider>{children}</TContextProvider>
+        {children}
         <Footer />
       </body>
     </html>

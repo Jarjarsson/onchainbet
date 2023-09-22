@@ -1,7 +1,5 @@
 'use client';
-import { useTContext } from '../context/Context';
 import Header from '../component/Header';
-import Bet from '../component/Bet';
 import ConnectButton from '../component/ConnectButton';
 import HistoryExpand from '../component/HistoryExpand';
 import { storeHistory } from '../utils/utils';
@@ -12,13 +10,13 @@ import contractAddress from './constants/address';
 import { HistoryItem, ReturnValues } from '../type';
 
 const BetPage = () => {
-  const { connect, history, wallet, setHistory } = useTContext();
+  const bettingHistory = storeHistory();
+  const [wallet, setWallet] = useState('');
+  const [history, setHistory] = useState<HistoryItem[]>(bettingHistory.read());
   const [amount, setAmount] = useState(0);
   const [multiplier, setMultiplier] = useState(2);
   const [tx, setTx] = useState('');
   const [maxAmount, setMaxAmount] = useState(0);
-
-  const bettingHistory = storeHistory();
 
   useEffect(() => {
     (async () => {
@@ -54,16 +52,16 @@ const BetPage = () => {
         multiplier,
         status: value.status,
       };
-      cb(value)
-      setHistory(bettingHistory.read());
+      cb(value);
       bettingHistory.update(data);
+      setHistory(bettingHistory.read());
     }, wallet);
   };
 
   return (
     <>
       <Header links={[{ name: 'Demo', url: '/demo' }]}>
-        <ConnectButton />
+        <ConnectButton cb={setWallet} />
       </Header>
       <main className="flex justify-center items-center grow lg:flex-col lg:gap-10">
         <BettingInterface
@@ -71,15 +69,8 @@ const BetPage = () => {
           maxAmount={maxAmount}
           handleResult={handleResult}
         />
-        {/* <section className="w-2/3">
-          {connect ? (
-            <Bet />
-          ) : (
-            <p className="text-cc2 text-4xl">Connect your wallet to bet</p>
-          )}
-        </section> */}
         <section className="w-1/3 self-start lg:self-center lg:w-2/3">
-          {connect && <HistoryExpand history={history} clear={clear} />}
+          {wallet !== '' && <HistoryExpand history={history} clear={clear} />}
         </section>
       </main>
     </>

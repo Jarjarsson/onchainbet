@@ -1,7 +1,7 @@
 import { SelectMultiplier } from './SelectMultiplier';
 import { DisplayNumber } from './DisplayNumber';
 import { useState } from 'react';
-import { Result, ReturnValues } from '@/app/type';
+import { ReturnValues } from '@/app/type';
 import { animator } from '@/app/utils/utils';
 
 type Prop = {
@@ -12,7 +12,7 @@ type Prop = {
 
 const BettingInterface = ({ handleBet, maxAmount, handleResult }: Prop) => {
   const [multiplier, setMultiplier] = useState(2);
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState(maxAmount);
   const [activeNumber, setActiveNumber] = useState(1);
 
   const animation = animator(setActiveNumber);

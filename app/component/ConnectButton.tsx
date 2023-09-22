@@ -1,30 +1,33 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connectWallet, checkConnection } from '../bet/web3/web3Client';
 import { cropWallet } from '../utils/utils';
-import { useTContext } from '../context/Context';
 
-const ConnectButton = () => {
-  const { wallet, setWallet, connect, setConnect } = useTContext();
+type Prop = {
+  cb: (address: string) => void;
+};
 
+const ConnectButton = ({ cb }: Prop) => {
+  const [wallet, setWallet] = useState('');
   const handleSelectWallet = async () => {
     await connectWallet().then(res => {
       setWallet(res.address);
-      setConnect(true);
+      cb(res.address);
     });
   };
 
   useEffect(() => {
     (async () => {
-      await checkConnection(setWallet);
-      if (wallet !== '') {
-        setConnect(true);
+      const address = await checkConnection();
+      if (address !== '') {
+        setWallet(address);
+        cb(address);
       }
     })();
-  }, [wallet, setWallet, setConnect]);
+  }, [setWallet, cb]);
 
   return (
     <>
-      {connect ? (
+      {wallet !== '' ? (
         <p className="px-2 py-2 font-semibold text-cc2 bg-cc3/20 rounded-md select-none">
           Wallet : {wallet !== '' && cropWallet(wallet)}
         </p>
