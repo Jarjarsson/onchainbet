@@ -2,24 +2,14 @@
 import { useTContext } from '../context/Context';
 import Header from '../component/Header';
 import Bet from '../component/Bet';
-import { checkConnection } from './web3/web3Client';
-import { useEffect } from 'react';
 import ConnectButton from '../component/ConnectButton';
 import HistoryExpand from '../component/HistoryExpand';
 import { storeHistory } from '../utils/utils';
 
 const BetPage = () => {
-  const { connect, wallet, setWallet, setConnect, history, setHistory } =
-    useTContext();
+  const { connect, history, setHistory } = useTContext();
   const data = storeHistory();
-  useEffect(() => {
-    (async () => {
-      await checkConnection(setWallet);
-      if (wallet !== '') {
-        setConnect(true);
-      }
-    })();
-  }, [wallet, setWallet, setConnect]);
+
   const clear = () => {
     setHistory([]);
     data.clear();
@@ -30,13 +20,11 @@ const BetPage = () => {
         <ConnectButton />
       </Header>
       <main className="flex justify-center items-center grow lg:flex-col lg:gap-10">
-        <section className='w-2/3'>
+        <section className="w-2/3">
           {connect ? (
             <Bet />
           ) : (
-            <p className="text-cc2 text-4xl">
-              Connect your wallet to bet on the blockchain
-            </p>
+            <p className="text-cc2 text-4xl">Connect your wallet to bet</p>
           )}
         </section>
         <section className="w-1/3 self-start lg:self-center lg:w-2/3">
