@@ -6,7 +6,7 @@ import { animator } from '@/app/utils/utils';
 type Prop = {
   handleBet: (multiplier: number, amount: number) => Promise<void>;
   maxAmount: number;
-  handleResult: (cb: (number: number) => void) => void;
+  handleResult: (cb: (number: number) => Promise<void>) => void;
 };
 
 const BettingInterface = ({ handleBet, maxAmount, handleResult }: Prop) => {
@@ -19,8 +19,8 @@ const BettingInterface = ({ handleBet, maxAmount, handleResult }: Prop) => {
   const onBet = async () => {
     await handleBet(multiplier, amount);
     const t = animation.start(1);
-    handleResult((number: number) => {
-      animation.slowDown(Number(number), t);
+    handleResult(async (number: number) => {
+      await animation.slowDown(Number(number), t);
     });
   };
 

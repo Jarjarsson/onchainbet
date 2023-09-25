@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { playGame, getPlayerBalance, getPool } from './backend';
 
 import HistoryExpand from '../component/HistoryExpand';
@@ -10,12 +10,8 @@ import BettingInterface from '../component/bettingInterface/BettingInterface';
 const Demo = () => {
   const [playerbalance, setPlayerbalance] = useState(0);
   const [demoHis, setDemoHis] = useState<HistoryItem[]>([]);
-  const [result, setResult] = useState<Result>({
-    amount: 0,
-    number: 0,
-    status: 'Loss',
-  });
   const [multiplierLocal, setMultiplierLocal] = useState(2);
+  const localResult = useRef<Result>({ amount: 0, number: 0, status: 'Loss' });
 
   useEffect(() => {
     setPlayerbalance(getPlayerBalance());
@@ -23,20 +19,24 @@ const Demo = () => {
 
   const handleBet = async (multiplier: number, amount: number) => {
     setMultiplierLocal(multiplier);
-    setResult(playGame(amount, multiplier));
+    const out = playGame(amount, multiplier);
+    localResult.current = out;
   };
 
   const handleResult = (cb: (number: number) => void) => {
-    setTimeout(() => {
-      setPlayerbalance(getPlayerBalance());
+    const randomNumber = Math.random() * 5000;
+    console.log({ randomNumber });
+    setTimeout(async () => {
       const data: HistoryItem = {
-        ...result,
+        ...localResult.current,
         multiplier: multiplierLocal,
         transaction: '',
       };
+      await cb(localResult.current.number);
+      console.log({ result: localResult.current.number });
+      setPlayerbalance(getPlayerBalance());
       setDemoHis([...demoHis, data]);
-      cb(result.number);
-    }, Math.random()*5000);
+    }, randomNumber);
   };
 
   return (

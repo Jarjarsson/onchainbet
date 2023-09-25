@@ -51,29 +51,34 @@ export const animator = (setActiveNumber: (num: number) => void) => {
     return timerId;
   };
 
-  const runNTimes = (arr: number[]) =>
-    arr.reduce((acc, cur) => {
-      setTimeout(() => {
-        count.increase();
-      }, cur + acc);
-      return cur + acc;
-    });
+  const runNTimes = async (arr: number[]) => {
+    for (const i of arr) {
+      await new Promise<void>(resolve => {
+        setTimeout(() => {
+          count.increase();
+          resolve();
+        }, i);
+      });
+    }
+  };
 
-  const slowDown = (number: number, timeoutId: NodeJS.Timeout) => {
+  const slowDown = async (
+    number: number,
+    timeoutId: NodeJS.Timeout
+  ): Promise<void> => {
     stop(timeoutId);
     const diff = getDiff(count.getCounter(), number);
-    let loopDuration: number;
+
     if (diff > 20) {
-      loopDuration = runNTimes(Array(diff - 20).fill(50));
+     await runNTimes(Array(diff - 20).fill(50));
     } else {
-      loopDuration = runNTimes(Array(diff + 80).fill(50));
+     await runNTimes(Array(diff + 80).fill(50));
     }
-    setTimeout(() => {
-      const durs = retard(22);
-      runNTimes(durs);
-    }, loopDuration);
+
+    const durs = retard(20);
+    await runNTimes(durs);
   };
-  return { slowDown, start };
+  return {slowDown, start}
 };
 
 const stop = (timerId: NodeJS.Timeout) => {
