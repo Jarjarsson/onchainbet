@@ -4,24 +4,33 @@ import { useState } from 'react';
 import { animator } from '@/app/utils/utils';
 
 type Prop = {
-  handleBet: (multiplier: number, amount: number) => Promise<void>;
+  handleBet: (
+    multiplier: number,
+    amount: number
+  ) => Promise<{ status: string }>;
   maxAmount: number;
   handleResult: (cb: (number: number) => Promise<void>) => void;
 };
 
 const BettingInterface = ({ handleBet, maxAmount, handleResult }: Prop) => {
   const [multiplier, setMultiplier] = useState(2);
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(0.00001);
   const [activeNumber, setActiveNumber] = useState(1);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const animation = animator(setActiveNumber);
 
   const onBet = async () => {
-    await handleBet(multiplier, amount);
-    const t = animation.start(1);
-    handleResult(async (number: number) => {
-      await animation.slowDown(Number(number), t);
-    });
+    setButtonDisabled(true);
+    const result = await handleBet(multiplier, amount);
+    if (result.status === 'Success!') {
+      const t = animation.start(1);
+      handleResult(async (number: number) => {
+        await animation.slowDown(Number(number), t);
+        setButtonDisabled(false);
+      });
+    }
+    setButtonDisabled(false);
   };
 
   return (
@@ -43,7 +52,7 @@ const BettingInterface = ({ handleBet, maxAmount, handleResult }: Prop) => {
           onChange={e => setAmount(Number(e.target.value))}
         />
         <p>Bet amount: {amount} ETH</p>
-        <button>BET</button>
+        <button disabled={buttonDisabled}>BET</button>
       </form>
       <div className="flex">
         <div className="flex flex-col">

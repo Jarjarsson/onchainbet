@@ -21,6 +21,7 @@ const Demo = () => {
     setMultiplierLocal(multiplier);
     const out = playGame(amount, multiplier);
     localResult.current = out;
+    return {status: 'Success!'}
   };
 
   const handleResult = (cb: (number: number) => void) => {

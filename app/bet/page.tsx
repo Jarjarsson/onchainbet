@@ -32,7 +32,6 @@ const BetPage = () => {
   const handleBet = async (multiplier: number, amount: number) => {
     setAmount(amount);
     setMultiplier(multiplier);
-    if (amount > 0) {
       const response = await placeBet(
         contractAddress,
         wallet,
@@ -41,7 +40,7 @@ const BetPage = () => {
       );
       setTx(response.tx);
       setMaxAmount(await getMaxBet());
-    }
+      return {status:response.status}
   };
 
   const handleResult = (cb: (number: number) => void) => {
@@ -64,11 +63,12 @@ const BetPage = () => {
         <ConnectButton cb={setWallet} />
       </Header>
       <main className="flex justify-center items-center grow lg:flex-col lg:gap-10">
-        <BettingInterface
+        {wallet === ''? <p className='text-cc3'>Connect metamask to continue</p> : <BettingInterface
           handleBet={handleBet}
           maxAmount={maxAmount}
           handleResult={handleResult}
-        />
+        />}
+        
         <section className="w-1/3 self-start lg:self-center lg:w-2/3">
           {wallet !== '' && <HistoryExpand history={history} clear={clear} />}
         </section>
