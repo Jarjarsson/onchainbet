@@ -10,18 +10,23 @@ import contractAddress from './constants/address';
 import { HistoryItem, ReturnValues } from '../type';
 
 const BetPage = () => {
-  const bettingHistory = storeHistory();
   const [wallet, setWallet] = useState('');
-  const [history, setHistory] = useState<HistoryItem[]>(bettingHistory.read());
+  const [history, setHistory] = useState<HistoryItem[]>([]);
   const [amount, setAmount] = useState(0);
   const [multiplier, setMultiplier] = useState(2);
   const [tx, setTx] = useState('');
   const [maxAmount, setMaxAmount] = useState(0);
+  const bettingHistory = storeHistory();
 
   useEffect(() => {
     (async () => {
       setMaxAmount(await getMaxBet());
     })();
+  }, []);
+
+  useEffect(() => {
+    const bettingHistory = storeHistory();
+    setHistory(bettingHistory.read());
   }, []);
 
   const clear = () => {
@@ -32,15 +37,15 @@ const BetPage = () => {
   const handleBet = async (multiplier: number, amount: number) => {
     setAmount(amount);
     setMultiplier(multiplier);
-      const response = await placeBet(
-        contractAddress,
-        wallet,
-        multiplier,
-        amount
-      );
-      setTx(response.tx);
-      setMaxAmount(await getMaxBet());
-      return {status:response.status}
+    const response = await placeBet(
+      contractAddress,
+      wallet,
+      multiplier,
+      amount
+    );
+    setTx(response.tx);
+    setMaxAmount(await getMaxBet());
+    return { status: response.status };
   };
 
   const handleResult = (cb: (number: number) => void) => {
@@ -63,12 +68,16 @@ const BetPage = () => {
         <ConnectButton cb={setWallet} />
       </Header>
       <main className="flex justify-center items-center grow lg:flex-col lg:gap-10">
-        {wallet === ''? <p className='text-cc3'>Connect metamask to continue</p> : <BettingInterface
-          handleBet={handleBet}
-          maxAmount={maxAmount}
-          handleResult={handleResult}
-        />}
-        
+        {wallet === '' ? (
+          <p className="text-cc3">Connect metamask to continue</p>
+        ) : (
+          <BettingInterface
+            handleBet={handleBet}
+            maxAmount={maxAmount}
+            handleResult={handleResult}
+          />
+        )}
+
         <section className="w-1/3 self-start lg:self-center lg:w-2/3">
           {wallet !== '' && <HistoryExpand history={history} clear={clear} />}
         </section>
