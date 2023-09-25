@@ -22,6 +22,7 @@ const History = ({ history }: Prop) => {
             <a
               className="text-cc1/50 hover:text-cc2/50"
               href={`https://sepolia.etherscan.io/tx/${h.transaction}`}
+              target='_blank'
             >
               Transaction
             </a>

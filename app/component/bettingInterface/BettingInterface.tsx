@@ -29,8 +29,9 @@ const BettingInterface = ({ handleBet, maxAmount, handleResult }: Prop) => {
         await animation.slowDown(Number(number), t);
         setButtonDisabled(false);
       });
+    } else {
+      setButtonDisabled(false);
     }
-    setButtonDisabled(false);
   };
 
   return (

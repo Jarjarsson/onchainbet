@@ -4,7 +4,7 @@ import ConnectButton from '../component/ConnectButton';
 import HistoryExpand from '../component/HistoryExpand';
 import { storeHistory } from '../utils/utils';
 import BettingInterface from '../component/bettingInterface/BettingInterface';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gameResult, getMaxBet, placeBet } from './web3/web3Client';
 import contractAddress from './constants/address';
 import { HistoryItem, ReturnValues } from '../type';
@@ -12,9 +12,9 @@ import { HistoryItem, ReturnValues } from '../type';
 const BetPage = () => {
   const [wallet, setWallet] = useState('');
   const [history, setHistory] = useState<HistoryItem[]>([]);
-  const [amount, setAmount] = useState(0);
+  const amountRef = useRef(0);
   const [multiplier, setMultiplier] = useState(2);
-  const [tx, setTx] = useState('');
+  const tx = useRef('');
   const [maxAmount, setMaxAmount] = useState(0);
   const bettingHistory = storeHistory();
 
@@ -35,7 +35,7 @@ const BetPage = () => {
   };
 
   const handleBet = async (multiplier: number, amount: number) => {
-    setAmount(amount);
+    amountRef.current = amount;
     setMultiplier(multiplier);
     const response = await placeBet(
       contractAddress,
@@ -43,20 +43,20 @@ const BetPage = () => {
       multiplier,
       amount
     );
-    setTx(response.tx);
+    tx.current = response.tx;
     setMaxAmount(await getMaxBet());
     return { status: response.status };
   };
 
-  const handleResult = (cb: (number: number) => void) => {
-    gameResult((value: ReturnValues) => {
+  const handleResult = async (cb: (number: number) => Promise<void>) => {
+    gameResult(async (value: ReturnValues) => {
       const data: HistoryItem = {
-        amount,
-        transaction: tx,
+        amount: amountRef.current,
+        transaction: tx.current,
         multiplier,
         status: value.status,
       };
-      cb(Number(value.outcome));
+      await cb(Number(value.outcome));
       bettingHistory.update(data);
       setHistory(bettingHistory.read());
     }, wallet);
@@ -69,7 +69,7 @@ const BetPage = () => {
       </Header>
       <main className="flex justify-center items-center grow lg:flex-col lg:gap-10">
         {wallet === '' ? (
-          <p className="text-cc3">Connect metamask to continue</p>
+          <p className="text-cc3">Connect Metamask wallet to continue</p>
         ) : (
           <BettingInterface
             handleBet={handleBet}

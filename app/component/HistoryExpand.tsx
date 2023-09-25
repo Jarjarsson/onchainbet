@@ -20,7 +20,7 @@ const HistoryExpand = ({ history, clear }: Prop) => {
         }`}
         onClick={handleExpand}
       >
-        <p>Betting History</p>
+        <p>Betting History [current session]</p>
       </div>
       {expand && (
         <div className="flex flex-col gap-2 bg-cc3/50 p-2 rounded-b-md">
