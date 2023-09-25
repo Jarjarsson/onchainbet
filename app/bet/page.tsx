@@ -44,7 +44,7 @@ const BetPage = () => {
     }
   };
 
-  const handleResult = (cb: (number: ReturnValues) => void) => {
+  const handleResult = (cb: (number: number) => void) => {
     gameResult((value: ReturnValues) => {
       const data: HistoryItem = {
         amount,
@@ -52,7 +52,7 @@ const BetPage = () => {
         multiplier,
         status: value.status,
       };
-      cb(value);
+      cb(Number(value.outcome));
       bettingHistory.update(data);
       setHistory(bettingHistory.read());
     }, wallet);

@@ -1,18 +1,17 @@
 import { SelectMultiplier } from './SelectMultiplier';
 import { DisplayNumber } from './DisplayNumber';
 import { useState } from 'react';
-import { ReturnValues } from '@/app/type';
 import { animator } from '@/app/utils/utils';
 
 type Prop = {
   handleBet: (multiplier: number, amount: number) => Promise<void>;
   maxAmount: number;
-  handleResult: (cb: (number: ReturnValues) => void) => void;
+  handleResult: (cb: (number: number) => void) => void;
 };
 
 const BettingInterface = ({ handleBet, maxAmount, handleResult }: Prop) => {
   const [multiplier, setMultiplier] = useState(2);
-  const [amount, setAmount] = useState(maxAmount);
+  const [amount, setAmount] = useState(0);
   const [activeNumber, setActiveNumber] = useState(1);
 
   const animation = animator(setActiveNumber);
@@ -20,8 +19,8 @@ const BettingInterface = ({ handleBet, maxAmount, handleResult }: Prop) => {
   const onBet = async () => {
     await handleBet(multiplier, amount);
     const t = animation.start(1);
-    handleResult((number: ReturnValues) => {
-      animation.slowDown(Number(number.outcome), t);
+    handleResult((number: number) => {
+      animation.slowDown(Number(number), t);
     });
   };
 

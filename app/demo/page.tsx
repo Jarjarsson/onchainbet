@@ -3,36 +3,40 @@ import { useEffect, useState } from 'react';
 import { playGame, getPlayerBalance, getPool } from './backend';
 
 import HistoryExpand from '../component/HistoryExpand';
-import { HistoryItem, ReturnValues } from '../type';
+import { HistoryItem, Result } from '../type';
 import Header from '../component/Header';
 import BettingInterface from '../component/bettingInterface/BettingInterface';
 
 const Demo = () => {
   const [playerbalance, setPlayerbalance] = useState(0);
   const [demoHis, setDemoHis] = useState<HistoryItem[]>([]);
-  const [result, setResult] = useState(0);
+  const [result, setResult] = useState<Result>({
+    amount: 0,
+    number: 0,
+    status: 'Loss',
+  });
+  const [multiplierLocal, setMultiplierLocal] = useState(2);
 
   useEffect(() => {
     setPlayerbalance(getPlayerBalance());
   }, []);
 
   const handleBet = async (multiplier: number, amount: number) => {
-    const r = playGame(amount, multiplier);
-    setPlayerbalance(getPlayerBalance());
-    const data: HistoryItem = { ...r, multiplier, transaction: '' };
-    setDemoHis([...demoHis, data]);
-    setResult(r.number);
+    setMultiplierLocal(multiplier);
+    setResult(playGame(amount, multiplier));
   };
 
-  const handleResult = (cb: (number: ReturnValues) => void) => {
+  const handleResult = (cb: (number: number) => void) => {
     setTimeout(() => {
-      cb({
-        amount: BigInt(0),
-        playerAddress: '',
-        outcome: BigInt(result),
-        status: 'Win',
-      });
-    }, 2000);
+      setPlayerbalance(getPlayerBalance());
+      const data: HistoryItem = {
+        ...result,
+        multiplier: multiplierLocal,
+        transaction: '',
+      };
+      setDemoHis([...demoHis, data]);
+      cb(result.number);
+    }, Math.random()*5000);
   };
 
   return (
@@ -48,7 +52,7 @@ const Demo = () => {
         </section>
         <BettingInterface
           handleBet={handleBet}
-          maxAmount={getPool() / 12}
+          maxAmount={Number((getPool() / 12).toFixed(5))}
           handleResult={handleResult}
         />
       </main>
