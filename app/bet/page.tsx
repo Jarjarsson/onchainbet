@@ -2,7 +2,7 @@
 import Header from '../component/Header';
 import ConnectButton from '../component/ConnectButton';
 import HistoryExpand from '../component/HistoryExpand';
-import { randomArray, storeHistory } from '../utils/utils';
+import { getTime, randomArray, storeHistory } from '../utils/utils';
 import BettingInterface from '../component/bettingInterface/BettingInterface';
 import { useEffect, useRef, useState } from 'react';
 import { gameResult, getMaxBet, placeBet } from './web3/web3Client';
@@ -56,6 +56,7 @@ const BetPage = () => {
         transaction: tx.current,
         multiplier,
         status: value.status,
+        time: getTime(),
       };
       await cb(Number(value.outcome));
       bettingHistory.update(data);
@@ -68,19 +69,21 @@ const BetPage = () => {
       <Header links={[{ name: 'Demo', url: '/demo' }]}>
         <ConnectButton cb={setWallet} />
       </Header>
-      <main className="flex justify-center items-center grow lg:flex-col lg:gap-10">
-        {wallet === '' ? (
-          <p className="text-cc3">Connect Metamask wallet to continue</p>
-        ) : (
-          <BettingInterface
-            handleBet={handleBet}
-            maxAmount={maxAmount}
-            handleResult={handleResult}
-            rndArray={rndArray.current}
-          />
-        )}
+      <main className="flex gap-4 h-full">
+        <section className="w-2/3 flex flex-col items-center justify-center gap-4 px-6">
+          {wallet === '' ? (
+            <p className="text-cc3">Connect Metamask wallet to continue</p>
+          ) : (
+            <BettingInterface
+              handleBet={handleBet}
+              maxAmount={maxAmount}
+              handleResult={handleResult}
+              rndArray={rndArray.current}
+            />
+          )}
+        </section>
 
-        <section className="w-1/3 self-start lg:self-center lg:w-2/3">
+        <section className="flex flex-col w-1/3 h-full">
           {wallet !== '' && <HistoryExpand history={history} clear={clear} />}
         </section>
       </main>

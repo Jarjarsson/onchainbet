@@ -18,4 +18,5 @@ export type HistoryItem = {
   amount: number;
   multiplier: number;
   transaction: string;
+  time: string;
 };

@@ -6,7 +6,7 @@ import HistoryExpand from '../component/HistoryExpand';
 import { HistoryItem, Result } from '../type';
 import Header from '../component/Header';
 import BettingInterface from '../component/bettingInterface/BettingInterface';
-import { randomArray } from '../utils/utils';
+import { getTime, randomArray } from '../utils/utils';
 
 const Demo = () => {
   const [playerbalance, setPlayerbalance] = useState(0);
@@ -28,15 +28,14 @@ const Demo = () => {
 
   const handleResult = (cb: (number: number) => void) => {
     const randomNumber = Math.random() * 5000;
-    console.log({ randomNumber });
     setTimeout(async () => {
       const data: HistoryItem = {
         ...localResult.current,
         multiplier: multiplierLocal,
         transaction: '',
+        time: getTime(),
       };
       await cb(localResult.current.number);
-      console.log({ result: localResult.current.number });
       setPlayerbalance(getPlayerBalance());
       setDemoHis([...demoHis, data]);
     }, randomNumber);

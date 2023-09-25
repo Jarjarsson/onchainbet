@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="flex justify-center">
-      <body className="bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-cc1 to-cc2 w-screen h-screen flex flex-col justify-between lg:max-w-5xl">
+      <body className="bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-cc1 to-cc2 w-screen h-screen flex flex-col justify-between lg:max-w-7xl">
         {children}
         <Footer />
       </body>

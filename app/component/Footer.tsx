@@ -12,7 +12,12 @@ const Footer = () => {
             View contract address |
           </a>
         </p>
-        <p>Network: Sepolia Testnet </p>
+        <p>
+          Network:{' '}
+          <a href="https://sepoliafaucet.com/" target="_blank">
+            Sepolia Testnet
+          </a>{' '}
+        </p>
       </div>
     </footer>
   );

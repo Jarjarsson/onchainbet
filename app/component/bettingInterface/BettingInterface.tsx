@@ -33,7 +33,6 @@ const BettingInterface = ({
       const t = animation.start(0);
       handleResult(async (number: number) => {
         const winningIndex = rndArray.indexOf(Number(number));
-        console.log({ win: Number(number) });
         await animation.slowDown(winningIndex, t);
         setButtonDisabled(false);
       });
@@ -42,14 +41,16 @@ const BettingInterface = ({
     }
   };
   return (
-    <section>
+    <>
       <form
         onSubmit={e => {
           e.preventDefault();
           onBet();
         }}
+        className='flex text-cc3 w-full gap-4 justify-center '
       >
-        <label htmlFor="multiplierRange">Bet Amount </label>
+        <div>
+        <label htmlFor="multiplierRange" className='text-2xl'>Bet Amount </label>
         <input
           id="multiplierRange"
           type="range"
@@ -59,11 +60,12 @@ const BettingInterface = ({
           step={0.00001}
           onChange={e => setAmount(Number(e.target.value))}
         />
-        <p>Bet amount: {amount} ETH</p>
-        <button disabled={buttonDisabled}>BET</button>
+        <p className='text-right'>Bet amount: {amount} ETH</p>
+        </div>
+        <button disabled={buttonDisabled} className='text-4xl rounded-lg bg-cc2 p-4 text-cc1'>BET</button>
       </form>
-      <div className="flex">
-        <div className="flex flex-col">
+      <div className="flex gap-6 ">
+        <div className="flex flex-col justify-around ">
           {[2, 4, 8, 10].map(i => (
             <SelectMultiplier
               key={i + 'mul'}
@@ -75,7 +77,7 @@ const BettingInterface = ({
             ></SelectMultiplier>
           ))}
         </div>
-        <ul className="grid grid-cols-10 gap-1">
+        <ul className="grid grid-cols-10 gap-y-2 gap-x-4">
           {rndArray.map((num, i) => (
             <DisplayNumber
               key={i + 'grid'}
@@ -86,7 +88,7 @@ const BettingInterface = ({
           ))}
         </ul>
       </div>
-    </section>
+    </>
   );
 };
 

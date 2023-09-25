@@ -100,3 +100,8 @@ export const randomArray = (n: number) => {
   }
   return rndarr;
 };
+
+export const getTime = () => {
+  const d = new Date();
+  return `${d.getHours()}:${d.getMinutes()}`;
+};
