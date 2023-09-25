@@ -10,12 +10,18 @@ type Prop = {
   ) => Promise<{ status: string }>;
   maxAmount: number;
   handleResult: (cb: (number: number) => Promise<void>) => void;
+  rndArray: number[];
 };
 
-const BettingInterface = ({ handleBet, maxAmount, handleResult }: Prop) => {
+const BettingInterface = ({
+  handleBet,
+  maxAmount,
+  handleResult,
+  rndArray,
+}: Prop) => {
   const [multiplier, setMultiplier] = useState(2);
   const [amount, setAmount] = useState(0.00001);
-  const [activeNumber, setActiveNumber] = useState(1);
+  const [activeNumber, setActiveNumber] = useState(0);
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const animation = animator(setActiveNumber);
@@ -24,16 +30,17 @@ const BettingInterface = ({ handleBet, maxAmount, handleResult }: Prop) => {
     setButtonDisabled(true);
     const result = await handleBet(multiplier, amount);
     if (result.status === 'Success!') {
-      const t = animation.start(1);
+      const t = animation.start(0);
       handleResult(async (number: number) => {
-        await animation.slowDown(Number(number), t);
+        const winningIndex = rndArray.indexOf(Number(number));
+        console.log({ win: Number(number) });
+        await animation.slowDown(winningIndex, t);
         setButtonDisabled(false);
       });
     } else {
       setButtonDisabled(false);
     }
   };
-
   return (
     <section>
       <form
@@ -69,12 +76,12 @@ const BettingInterface = ({ handleBet, maxAmount, handleResult }: Prop) => {
           ))}
         </div>
         <ul className="grid grid-cols-10 gap-1">
-          {[...Array(100).keys()].map(i => (
+          {rndArray.map((num, i) => (
             <DisplayNumber
               key={i + 'grid'}
-              num={i + 1}
-              winnable={88 / multiplier < i + 1}
-              active={activeNumber === i + 1}
+              num={num}
+              winnable={88 / multiplier < num}
+              active={activeNumber === i}
             />
           ))}
         </ul>

@@ -6,12 +6,14 @@ import HistoryExpand from '../component/HistoryExpand';
 import { HistoryItem, Result } from '../type';
 import Header from '../component/Header';
 import BettingInterface from '../component/bettingInterface/BettingInterface';
+import { randomArray } from '../utils/utils';
 
 const Demo = () => {
   const [playerbalance, setPlayerbalance] = useState(0);
   const [demoHis, setDemoHis] = useState<HistoryItem[]>([]);
   const [multiplierLocal, setMultiplierLocal] = useState(2);
   const localResult = useRef<Result>({ amount: 0, number: 0, status: 'Loss' });
+  const rndArray = useRef<number[]>(randomArray(100));
 
   useEffect(() => {
     setPlayerbalance(getPlayerBalance());
@@ -21,7 +23,7 @@ const Demo = () => {
     setMultiplierLocal(multiplier);
     const out = playGame(amount, multiplier);
     localResult.current = out;
-    return {status: 'Success!'}
+    return { status: 'Success!' };
   };
 
   const handleResult = (cb: (number: number) => void) => {
@@ -55,6 +57,7 @@ const Demo = () => {
           handleBet={handleBet}
           maxAmount={Number((getPool() / 12).toFixed(5))}
           handleResult={handleResult}
+          rndArray={rndArray.current}
         />
       </main>
     </>

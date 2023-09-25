@@ -2,7 +2,7 @@
 import Header from '../component/Header';
 import ConnectButton from '../component/ConnectButton';
 import HistoryExpand from '../component/HistoryExpand';
-import { storeHistory } from '../utils/utils';
+import { randomArray, storeHistory } from '../utils/utils';
 import BettingInterface from '../component/bettingInterface/BettingInterface';
 import { useEffect, useRef, useState } from 'react';
 import { gameResult, getMaxBet, placeBet } from './web3/web3Client';
@@ -17,6 +17,7 @@ const BetPage = () => {
   const tx = useRef('');
   const [maxAmount, setMaxAmount] = useState(0);
   const bettingHistory = storeHistory();
+  const rndArray = useRef<number[]>(randomArray(100));
 
   useEffect(() => {
     (async () => {
@@ -75,6 +76,7 @@ const BetPage = () => {
             handleBet={handleBet}
             maxAmount={maxAmount}
             handleResult={handleResult}
+            rndArray={rndArray.current}
           />
         )}
 

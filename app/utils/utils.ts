@@ -70,15 +70,15 @@ export const animator = (setActiveNumber: (num: number) => void) => {
     const diff = getDiff(count.getCounter(), number);
 
     if (diff > 20) {
-     await runNTimes(Array(diff - 20).fill(50));
+      await runNTimes(Array(diff - 20).fill(50));
     } else {
-     await runNTimes(Array(diff + 80).fill(50));
+      await runNTimes(Array(diff + 80).fill(50));
     }
 
     const durs = retard(20);
     await runNTimes(durs);
   };
-  return {slowDown, start}
+  return { slowDown, start };
 };
 
 const stop = (timerId: NodeJS.Timeout) => {
@@ -90,3 +90,13 @@ const retard = (len: number) =>
 
 const getDiff = (current: number, target: number) =>
   (target - current + 100) % 100;
+
+export const randomArray = (n: number) => {
+  const arr = [...Array(n).keys()];
+  const rndarr = [];
+  for (let i = 0; i < n; i++) {
+    const rndNum = Math.floor(Math.random() * arr.length);
+    rndarr.push(arr.splice(rndNum, 1)[0]);
+  }
+  return rndarr;
+};
