@@ -7,7 +7,7 @@ type Prop = {
 
 const History = ({ history }: Prop) => {
   return (
-    <ul className="flex flex-col text-cc1 bg-cc3/30 rounded-md text-xs overflow-y-auto">
+    <ul className="text-cc1 bg-cc3/30 rounded-md text-xs h-80 overflow-y-auto">
       {history.map((h, i) => (
         <li
           className="flex justify-between border-b-2 p-2 last:border-none"

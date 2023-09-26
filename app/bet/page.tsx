@@ -69,7 +69,7 @@ const BetPage = () => {
       <Header links={[{ name: 'Demo', url: '/demo' }]}>
         <ConnectButton cb={setWallet} />
       </Header>
-      <main className="flex gap-4 h-full">
+      <main className="flex gap-4 flex-1">
         <section className="w-2/3 flex flex-col items-center justify-center gap-4 px-6">
           {wallet === '' ? (
             <p className="text-cc3">Connect Metamask wallet to continue</p>
@@ -82,8 +82,7 @@ const BetPage = () => {
             />
           )}
         </section>
-
-        <section className="flex flex-col w-1/3 h-full">
+        <section className="w-1/3">
           {wallet !== '' && <HistoryExpand history={history} clear={clear} />}
         </section>
       </main>
