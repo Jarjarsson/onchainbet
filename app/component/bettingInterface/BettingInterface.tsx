@@ -47,7 +47,7 @@ const BettingInterface = ({
           e.preventDefault();
           onBet();
         }}
-        className="flex text-cc3 w-3/4 justify-around  "
+        className="flex text-cc3 w-3/4 justify-around items-center  "
       >
         <div>
           <label htmlFor="multiplierRange" className="text-2xl">
@@ -71,7 +71,7 @@ const BettingInterface = ({
         </div>
         <button
           disabled={buttonDisabled}
-          className="text-4xl rounded-md bg-cc2 p-4 text-cc1"
+          className="text-4xl rounded-md bg-cc2 text-cc1 h-fit p-2"
         >
           BET
         </button>

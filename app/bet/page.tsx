@@ -82,7 +82,7 @@ const BetPage = () => {
             />
           )}
         </section>
-        <section className="w-1/3 flex flex-col justify-center p-4">
+        <section className="w-1/3 flex flex-col justify-center p-4 ">
           {wallet !== "" && <HistoryExpand history={history} clear={clear} />}
         </section>
       </main>
