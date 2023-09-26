@@ -21,6 +21,9 @@ const Header = ({ links, children }: HeaderProps) => {
         <Link href={"/"} className="text-cc3 text-2xl">
           OnChainBet
         </Link>
+        <Link href={"/about"} className="text-cc3 text-xl underline">
+          About
+        </Link>
       </div>
       <div className="flex items-center gap-10 px-4">
         <nav className="flex gap-3">

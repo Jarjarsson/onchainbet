@@ -13,10 +13,13 @@ const Footer = () => {
           </a>
         </p>
         <p>
-          Network:{" "}
+          Network:{' '}
           <a href="https://sepoliafaucet.com/" target="_blank">
-            Sepolia Testnet
-          </a>{" "}
+            Sepolia Testnet |
+          </a>{' '}
+        </p>
+        <p>
+          <a href="https://www.coincarp.com/chainlist/sepolia/" target="_blank">Metamask setup guide</a>
         </p>
       </div>
     </footer>
