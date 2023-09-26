@@ -47,22 +47,29 @@ const BettingInterface = ({
           e.preventDefault();
           onBet();
         }}
-        className='flex text-cc3 w-full gap-4 justify-center '
+        className="flex text-cc3 w-full gap-4 justify-center "
       >
         <div>
-        <label htmlFor="multiplierRange" className='text-2xl'>Bet Amount </label>
-        <input
-          id="multiplierRange"
-          type="range"
-          value={amount}
-          min={0.00001}
-          max={maxAmount.toFixed(5)}
-          step={0.00001}
-          onChange={e => setAmount(Number(e.target.value))}
-        />
-        <p className='text-right'>Bet amount: {amount} ETH</p>
+          <label htmlFor="multiplierRange" className="text-2xl">
+            Bet Amount{' '}
+          </label>
+          <input
+            id="multiplierRange"
+            type="range"
+            value={amount}
+            min={0.00001}
+            max={maxAmount.toFixed(5)}
+            step={0.00001}
+            onChange={e => setAmount(Number(e.target.value))}
+          />
+          <p className="text-right">Bet amount: {amount} ETH</p>
         </div>
-        <button disabled={buttonDisabled} className='text-4xl rounded-lg bg-cc2 p-4 text-cc1'>BET</button>
+        <button
+          disabled={buttonDisabled}
+          className="text-4xl rounded-lg bg-cc2 p-4 text-cc1"
+        >
+          BET
+        </button>
       </form>
       <div className="flex gap-6 ">
         <div className="flex flex-col justify-around ">
@@ -74,6 +81,7 @@ const BettingInterface = ({
               }}
               multiplier={i}
               betAmount={amount}
+              selected={i === multiplier}
             ></SelectMultiplier>
           ))}
         </div>
