@@ -48,16 +48,18 @@ const Demo = () => {
           Your Balance: {playerbalance.toFixed(4)}
         </p>
       </Header>
-      <main className="flex justify-center items-center grow lg:flex-col lg:gap-10">
-        <section className="w-1/3 self-start lg:self-center lg:w-2/3">
-          <HistoryExpand history={demoHis} clear={() => setDemoHis([])} />
-        </section>
+      <main className="flex gap-4 flex-1">
+        <section className='w-2/3 flex flex-col items-center justify-center gap-4 px-6'>
         <BettingInterface
           handleBet={handleBet}
           maxAmount={Number((getPool() / 12).toFixed(5))}
           handleResult={handleResult}
           rndArray={rndArray.current}
         />
+        </section>
+        <section className="w-1/3">
+          <HistoryExpand history={demoHis} clear={() => setDemoHis([])} />
+        </section>
       </main>
     </>
   );
