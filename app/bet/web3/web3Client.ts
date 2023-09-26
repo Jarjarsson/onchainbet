@@ -19,11 +19,12 @@ const placeBet = async (
   multiplier: number,
   amount: number,
 ) => {
+  const multiplierBN = web3.utils.toBigInt(multiplier);
   const transactionParameters = {
     from: address,
     to: contractAddress,
-    data: onChainBet.methods.placeBet(multiplier.toString(16)).encodeABI(),
-    value: Number(ethToWei(amount)).toString(16),
+    data: onChainBet.methods.placeBet(multiplierBN.toString()).encodeABI(),
+    value: ethToWei(amount).toString(16),
   };
   try {
     const txHash = await (window as any).ethereum.request({
