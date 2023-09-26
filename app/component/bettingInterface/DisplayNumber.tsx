@@ -5,12 +5,12 @@ type NumberProps = {
 };
 
 const DisplayNumber = ({ num, winnable, active }: NumberProps) => {
-  let color = winnable ? 'cc1' : 'cc2';
-  let textColor = winnable? 'cc3' : 'cc1'
+  let color = winnable ? "cc1" : "cc2";
+  let textColor = winnable ? "cc3" : "cc1";
 
   if (active) {
-    color = 'cc3'
-    textColor = 'cc1'
+    color = "cc3";
+    textColor = "cc1";
   }
 
   return (

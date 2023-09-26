@@ -1,4 +1,4 @@
-import { Result } from '../type';
+import { Result } from "../type";
 
 let pool = 2;
 let playerBalance = 2;
@@ -16,9 +16,9 @@ const playGame = (bet: number, multiplier: number): Result => {
   if (win) {
     pool -= prize;
     playerBalance += prize;
-    return { status: 'Win', amount: bet, number: num };
+    return { status: "Win", amount: bet, number: num };
   }
-  return { status: 'Loss', amount: bet, number:num };
+  return { status: "Loss", amount: bet, number: num };
 };
 
 export { playGame, getPlayerBalance, getPool };

@@ -1,6 +1,6 @@
-'use client';
-import Image from 'next/image';
-import Link from 'next/link';
+"use client";
+import Image from "next/image";
+import Link from "next/link";
 
 type HeaderProps = {
   links: { name: string; url: string }[];
@@ -18,11 +18,11 @@ const Header = ({ links, children }: HeaderProps) => {
           height={80}
           className="rounded-md"
         />
-        <Link href={'/'} className="text-cc3 text-2xl">
+        <Link href={"/"} className="text-cc3 text-2xl">
           OnChainBet
         </Link>
       </div>
-      <div className='flex items-center gap-10 px-4'>
+      <div className="flex items-center gap-10 px-4">
         <nav className="flex gap-3">
           {links.map(({ name, url }) => (
             <Link

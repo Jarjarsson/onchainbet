@@ -1,20 +1,20 @@
-'use client';
-import Header from '../component/Header';
-import ConnectButton from '../component/ConnectButton';
-import HistoryExpand from '../component/HistoryExpand';
-import { getTime, randomArray, storeHistory } from '../utils/utils';
-import BettingInterface from '../component/bettingInterface/BettingInterface';
-import { useEffect, useRef, useState } from 'react';
-import { gameResult, getMaxBet, placeBet } from './web3/web3Client';
-import contractAddress from './constants/address';
-import { HistoryItem, ReturnValues } from '../type';
+"use client";
+import Header from "../component/Header";
+import ConnectButton from "../component/ConnectButton";
+import HistoryExpand from "../component/HistoryExpand";
+import { getTime, randomArray, storeHistory } from "../utils/utils";
+import BettingInterface from "../component/bettingInterface/BettingInterface";
+import { useEffect, useRef, useState } from "react";
+import { gameResult, getMaxBet, placeBet } from "./web3/web3Client";
+import contractAddress from "./constants/address";
+import { HistoryItem, ReturnValues } from "../type";
 
 const BetPage = () => {
-  const [wallet, setWallet] = useState('');
+  const [wallet, setWallet] = useState("");
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const amountRef = useRef(0);
   const [multiplier, setMultiplier] = useState(2);
-  const tx = useRef('');
+  const tx = useRef("");
   const [maxAmount, setMaxAmount] = useState(0);
   const bettingHistory = storeHistory();
   const rndArray = useRef<number[]>(randomArray(100));
@@ -42,7 +42,7 @@ const BetPage = () => {
       contractAddress,
       wallet,
       multiplier,
-      amount
+      amount,
     );
     tx.current = response.tx;
     setMaxAmount(await getMaxBet());
@@ -66,12 +66,12 @@ const BetPage = () => {
 
   return (
     <>
-      <Header links={[{ name: 'Demo', url: '/demo' }]}>
+      <Header links={[{ name: "Demo", url: "/demo" }]}>
         <ConnectButton cb={setWallet} />
       </Header>
       <main className="flex gap-4 flex-1">
         <section className="w-2/3 flex flex-col items-center justify-center gap-4 px-6">
-          {wallet === '' ? (
+          {wallet === "" ? (
             <p className="text-cc3">Connect Metamask wallet to continue</p>
           ) : (
             <BettingInterface
@@ -82,8 +82,8 @@ const BetPage = () => {
             />
           )}
         </section>
-        <section className="w-1/3">
-          {wallet !== '' && <HistoryExpand history={history} clear={clear} />}
+        <section className="w-1/3 flex flex-col justify-center p-4">
+          {wallet !== "" && <HistoryExpand history={history} clear={clear} />}
         </section>
       </main>
     </>

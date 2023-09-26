@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 type Props = {
   maxAmount: number;
@@ -8,11 +8,13 @@ type Props = {
 
 const SpecifyAmount = ({ maxAmount, setAmt, handleBet }: Props) => {
   const [amount, setAmount] = useState(0.00001);
-  
+
   return (
-    <form onSubmit={() => {
-      handleBet
-    }}>
+    <form
+      onSubmit={() => {
+        handleBet;
+      }}
+    >
       <label htmlFor="multiplierRange">Bet Amount </label>
 
       <input
@@ -22,7 +24,7 @@ const SpecifyAmount = ({ maxAmount, setAmt, handleBet }: Props) => {
         min={0.00001}
         max={maxAmount.toFixed(5)}
         step={0.00001}
-        onChange={e => setAmount(Number(e.target.value))}
+        onChange={(e) => setAmount(Number(e.target.value))}
       />
       <p>Bet amount: {amount} ETH</p>
       <button>BET</button>

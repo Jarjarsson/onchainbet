@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { connectWallet, checkConnection } from '../bet/web3/web3Client';
-import { cropWallet } from '../utils/utils';
+import React, { useEffect, useState } from "react";
+import { connectWallet, checkConnection } from "../bet/web3/web3Client";
+import { cropWallet } from "../utils/utils";
 
 type Prop = {
   cb: (address: string) => void;
 };
 
 const ConnectButton = ({ cb }: Prop) => {
-  const [wallet, setWallet] = useState('');
+  const [wallet, setWallet] = useState("");
   const handleSelectWallet = async () => {
-    await connectWallet().then(res => {
+    await connectWallet().then((res) => {
       setWallet(res.address);
       cb(res.address);
     });
@@ -18,7 +18,7 @@ const ConnectButton = ({ cb }: Prop) => {
   useEffect(() => {
     (async () => {
       const address = await checkConnection();
-      if (address !== '') {
+      if (address !== "") {
         setWallet(address);
         cb(address);
       }
@@ -27,9 +27,9 @@ const ConnectButton = ({ cb }: Prop) => {
 
   return (
     <>
-      {wallet !== '' ? (
+      {wallet !== "" ? (
         <p className="px-2 py-2 font-semibold text-cc2 bg-cc3/20 rounded-md select-none">
-          Wallet : {wallet !== '' && cropWallet(wallet)}
+          Wallet : {wallet !== "" && cropWallet(wallet)}
         </p>
       ) : (
         <button

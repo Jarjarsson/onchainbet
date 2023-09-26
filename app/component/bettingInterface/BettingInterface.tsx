@@ -1,12 +1,12 @@
-import { SelectMultiplier } from './SelectMultiplier';
-import { DisplayNumber } from './DisplayNumber';
-import { useState } from 'react';
-import { animator } from '@/app/utils/utils';
+import { SelectMultiplier } from "./SelectMultiplier";
+import { DisplayNumber } from "./DisplayNumber";
+import { useState } from "react";
+import { animator } from "@/app/utils/utils";
 
 type Prop = {
   handleBet: (
     multiplier: number,
-    amount: number
+    amount: number,
   ) => Promise<{ status: string }>;
   maxAmount: number;
   handleResult: (cb: (number: number) => Promise<void>) => void;
@@ -29,7 +29,7 @@ const BettingInterface = ({
   const onBet = async () => {
     setButtonDisabled(true);
     const result = await handleBet(multiplier, amount);
-    if (result.status === 'Success!') {
+    if (result.status === "Success!") {
       const t = animation.start(0);
       handleResult(async (number: number) => {
         const winningIndex = rndArray.indexOf(Number(number));
@@ -43,15 +43,15 @@ const BettingInterface = ({
   return (
     <>
       <form
-        onSubmit={e => {
+        onSubmit={(e) => {
           e.preventDefault();
           onBet();
         }}
-        className="flex text-cc3 w-full gap-4 justify-center "
+        className="flex text-cc3 w-3/4 justify-around  "
       >
         <div>
           <label htmlFor="multiplierRange" className="text-2xl">
-            Bet Amount{' '}
+            Bet Amount{" "}
           </label>
           <input
             id="multiplierRange"
@@ -60,35 +60,40 @@ const BettingInterface = ({
             min={0.00001}
             max={maxAmount.toFixed(5)}
             step={0.00001}
-            onChange={e => setAmount(Number(e.target.value))}
+            onChange={(e) => setAmount(Number(e.target.value))}
           />
-          <p className="text-right">Bet amount: {amount} ETH</p>
+          <div className="grid grid-cols-2">
+            <p className="text-left">Bet amount:</p>
+            <p className="text-left">{amount} ETH</p>
+            <p>Payout: </p>
+            <p>{(multiplier * amount).toFixed(5)} ETH</p>
+          </div>
         </div>
         <button
           disabled={buttonDisabled}
-          className="text-4xl rounded-lg bg-cc2 p-4 text-cc1"
+          className="text-4xl rounded-md bg-cc2 p-4 text-cc1"
         >
           BET
         </button>
       </form>
-      <div className="flex gap-6 ">
+      <div className="flex gap-6 w-3/4 justify-center">
         <div className="flex flex-col justify-around ">
-          {[2, 4, 8, 10].map(i => (
+          {[2, 4, 8, 10].map((i) => (
             <SelectMultiplier
-              key={i + 'mul'}
-              setMultiplier={value => {
+              key={i + "mul"}
+              setMultiplier={(value) => {
                 setMultiplier(value);
               }}
               multiplier={i}
-              betAmount={amount}
               selected={i === multiplier}
+              buttonDisable={buttonDisabled}
             ></SelectMultiplier>
           ))}
         </div>
         <ul className="grid grid-cols-10 gap-y-2 gap-x-4">
           {rndArray.map((num, i) => (
             <DisplayNumber
-              key={i + 'grid'}
+              key={i + "grid"}
               num={num}
               winnable={88 / multiplier < num}
               active={activeNumber === i}

@@ -1,5 +1,5 @@
-import React from 'react';
-import { HistoryItem } from '../type';
+import React from "react";
+import { HistoryItem } from "../type";
 
 type Prop = {
   history: HistoryItem[];
@@ -16,7 +16,7 @@ const History = ({ history }: Prop) => {
           <div className="flex gap-1">
             <p>{h.time}</p>
             <p>
-              {h.status === 'Loss'
+              {h.status === "Loss"
                 ? `You lost ${h.amount} ETH`
                 : `You won ${h.amount * h.multiplier} ETH `}
             </p>

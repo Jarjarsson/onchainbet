@@ -1,10 +1,10 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import Footer from './component/Footer';
+import "./globals.css";
+import type { Metadata } from "next";
+import Footer from "./component/Footer";
 
 export const metadata: Metadata = {
-  title: 'OnChainBet',
-  description: 'Make the game fun and fair',
+  title: "OnChainBet",
+  description: "Make the game fun and fair",
 };
 
 export default function RootLayout({

@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="bg-cc3/30 flex justify-between text-cc1/60 items-center px-5 py-2  ">
+    <footer className="bg-cc3/30 flex justify-between text-cc1/60 items-center px-5 py-2 ">
       <p className="items-center">© Copyright Developoors | 2023</p>
 
       <div className="flex gap-2">
@@ -13,10 +13,10 @@ const Footer = () => {
           </a>
         </p>
         <p>
-          Network:{' '}
+          Network:{" "}
           <a href="https://sepoliafaucet.com/" target="_blank">
             Sepolia Testnet
-          </a>{' '}
+          </a>{" "}
         </p>
       </div>
     </footer>

@@ -1,7 +1,7 @@
 export type Result = {
   status: winLoss;
   amount: number;
-  number: number
+  number: number;
 };
 
 export type winLoss = "Loss" | "Win";

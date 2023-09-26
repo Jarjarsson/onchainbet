@@ -1,13 +1,13 @@
-import { HistoryItem } from '../type';
+import { HistoryItem } from "../type";
 
 export const cropWallet = (wallet: string) =>
   `${wallet.substring(0, 4)}...${wallet.substring(
     wallet.length - 4,
-    wallet.length
+    wallet.length,
   )}`;
 
 export const storeHistory = () => {
-  const key = 'bettingHistory';
+  const key = "bettingHistory";
   const update = (item: HistoryItem) => {
     localStorage.setItem(key, JSON.stringify([...read(), item]));
   };
@@ -53,7 +53,7 @@ export const animator = (setActiveNumber: (num: number) => void) => {
 
   const runNTimes = async (arr: number[]) => {
     for (const i of arr) {
-      await new Promise<void>(resolve => {
+      await new Promise<void>((resolve) => {
         setTimeout(() => {
           count.increase();
           resolve();
@@ -64,7 +64,7 @@ export const animator = (setActiveNumber: (num: number) => void) => {
 
   const slowDown = async (
     number: number,
-    timeoutId: NodeJS.Timeout
+    timeoutId: NodeJS.Timeout,
   ): Promise<void> => {
     stop(timeoutId);
     const diff = getDiff(count.getCounter(), number);
@@ -86,7 +86,7 @@ const stop = (timerId: NodeJS.Timeout) => {
 };
 
 const retard = (len: number) =>
-  [...Array(len).keys()].map(i => 50 + i * 1.15 * 15);
+  [...Array(len).keys()].map((i) => 50 + i * 1.15 * 15);
 
 const getDiff = (current: number, target: number) =>
   (target - current + 100) % 100;
