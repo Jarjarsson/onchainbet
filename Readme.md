@@ -1,34 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# OnChainBet
 
-## Getting Started
+Welcome to OnChainBet, an Ethereum-based betting application built with Next.js, Solidity smart contracts, Hardhat, Alchemy (RPC provider), web3.js, and ethers.js. OnChainBet allows you to place bets on the Ethereum Sepolia testnet, offering both live and demo modes for your betting pleasure. Whether you're a blockchain enthusiast or new to the technology, this README will guide you through the application's features, setup, and usage.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Live Mode
+In the live mode, you can place real bets on the Ethereum Sepolia testnet. Here's how it works:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Bet Amount Slider**: Use a slider to set your bet amount within the range of the lowest to the maximum allowed bet.
+2. **Multiplier Selection**: Choose a multiplier between 2 and 10, which will determine your potential payout (multiplied by your bet).
+3. **Transaction**: Once you've set your bet amount and multiplier, you can send a transaction on the Ethereum Sepolia testnet to place your bet.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Demo Mode
+If you're unsure about installing Metamask, you can simulate the application in the demo mode.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. **Fake Balance**: You'll have a simulated balance for betting.
+2. **Simulation**: When you place a bet, a simulation of the real application will be initiated to mimic the actual betting process.
 
-## Learn More
+### Betting History
+In both live and demo modes, OnChainBet keeps track of your betting history for the current session. You'll see your wins, losses, and timestamps to help you monitor your Profit and Loss (P&L) for the ongoing session.
 
-To learn more about Next.js, take a look at the following resources:
+### About Section
+The About section provides brief information about the project and its founders, giving you insights into the motivation behind OnChainBet.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Installation and Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+To run OnChainBet, follow these steps:
 
-## Deploy on Vercel
+1. **Clone the Repository**: Clone this GitHub repository to your local machine.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   git clone https://github.com/jarjarsson/onchainbet.git
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+Install Dependencies: Navigate to the project directory and install the required dependencies.
+  <br/>cd onchainbet
+  <br/>npm install
+
+Metamask Installation: Make sure you have Metamask installed in your browser. Metamask is required to interact with the live application on the Ethereum testnet.
+
+
+How Blockchain Works
+Blockchain technology is the foundation of OnChainBet. If you're new to blockchain, here's a brief overview:
+
+Decentralization: Blockchains are distributed ledgers that are maintained by a network of nodes (computers) rather than a central authority. This makes them resistant to censorship and tampering.
+
+Transactions: Transactions on a blockchain are recorded in blocks, which are linked together in a chain. Once a transaction is added to a block, it cannot be altered, ensuring transparency and security.
+
+Smart Contracts: Smart contracts are self-executing contracts with predefined rules and conditions. They automate and enforce agreements, such as the betting logic in OnChainBet.
+
+Cryptocurrency: Blockchains often have their own native cryptocurrencies (e.g., ETH on Ethereum). These digital assets are used for transactions and fees within the network.
+
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+If you have any questions or feedback, please don't hesitate to reach out to us!

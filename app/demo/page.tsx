@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { playGame, getPlayerBalance, getPool } from "./backend";
+import { playGame, getPlayerBalance, getPool } from "./demoGameLogic";
 
 import HistoryExpand from "../component/HistoryExpand";
 import { HistoryItem, Result } from "../type";

@@ -8,6 +8,7 @@ type Prop = {
 
 const ConnectButton = ({ cb }: Prop) => {
   const [wallet, setWallet] = useState("");
+  const [disabled, setDisabled] = useState(true);
   const handleSelectWallet = async () => {
     await connectWallet().then((res) => {
       setWallet(res.address);
@@ -21,6 +22,7 @@ const ConnectButton = ({ cb }: Prop) => {
       if (address !== "") {
         setWallet(address);
         cb(address);
+        setDisabled(false);
       }
     })();
   }, [setWallet, cb]);
@@ -34,6 +36,7 @@ const ConnectButton = ({ cb }: Prop) => {
       ) : (
         <button
           onClick={handleSelectWallet}
+          disabled={disabled}
           className="px-2 py-2 font-semibold text-cc2 bg-cc3/20 rounded-md select-none"
         >
           Connect wallet

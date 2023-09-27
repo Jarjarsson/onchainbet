@@ -55,18 +55,21 @@ const connectWallet = async () => {
         method: "eth_requestAccounts",
       });
       const obj = {
+        status: "success",
         connected: true,
         address: addressArray[0],
       };
       return obj;
     } catch (err) {
       return {
+        status: "failed to get addresses",
         address: "",
         connected: false,
       };
     }
   } else {
     return {
+      status: "metamask not connected",
       address: "",
       connected: false,
     };
@@ -86,10 +89,12 @@ const gameResult = (
 };
 
 export const checkConnection = async () => {
-  const accounts = await (window as any).ethereum.request({
-    method: "eth_accounts",
-  });
-  if (accounts.length == !0) return accounts[0];
+  if ((window as any).ethereum) {
+    const accounts = await (window as any).ethereum.request({
+      method: "eth_accounts",
+    });
+    if (accounts.length == !0) return accounts[0];
+  }
   return "";
 };
 
