@@ -21,7 +21,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-//bg-gradient-to-br from-cc1 from-30% via-cc2/50 via-50% to-cc1 to-70%
-//bg-[conic-gradient(at_bottom_right,_var(--tw-gradient-stops))] from-gray-200 via-gray-400 to-gray-600
-//bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-gray-200 via-gray-400 to-gray-600

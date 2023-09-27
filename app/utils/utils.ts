@@ -75,8 +75,8 @@ export const animator = (setActiveNumber: (num: number) => void) => {
       await runNTimes(Array(diff + 80).fill(50));
     }
 
-    const durs = retard(20);
-    await runNTimes(durs);
+    const duration = animationEnd(20);
+    await runNTimes(duration);
   };
   return { slowDown, start };
 };
@@ -85,7 +85,7 @@ const stop = (timerId: NodeJS.Timeout) => {
   clearInterval(timerId);
 };
 
-const retard = (len: number) =>
+const animationEnd = (len: number) =>
   [...Array(len).keys()].map((i) => 50 + i * 1.15 * 15);
 
 const getDiff = (current: number, target: number) =>

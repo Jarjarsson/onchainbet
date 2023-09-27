@@ -44,7 +44,7 @@ const page = () => {
             three weeks as part of the post-graduate program at {"</salt>"}.
             This application allows you to place bets using a decentralized
             gambling algorithm ensuring a fair and transparent gaming
-            experience. The Solidity smart contract that can be viewed{" "}
+            experience. The Solidity smart contract can be viewed{" "}
             <span>
               <a
                 className="text-cc2 underline"

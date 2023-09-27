@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import History from "../component/HistoryItems";
 import { HistoryItem } from "../type";
 
@@ -8,10 +7,6 @@ type Prop = {
 };
 
 const HistoryExpand = ({ history, clear }: Prop) => {
-  // const [expand, setExpand] = useState(true);
-  // const handleExpand = () => {
-  //   setExpand(!expand);
-  // };
   return (
     <>
       <div className="flex justify-between items-center  px-2 py-1 font-semibold select-none text-cc3 bg-cc3/20 rounded-t-lg">

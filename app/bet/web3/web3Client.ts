@@ -2,10 +2,9 @@ import Web3 from "web3";
 import abi from "../constants/abi";
 import contractAddress from "../constants/address";
 import { ReturnValues } from "@/app/type";
+import "dotenv";
 
-const web3 = new Web3(
-  "wss://eth-sepolia.g.alchemy.com/v2/ET7Rh8pt9Djc9dEaYvVcxhWd5EtIn3PK",
-);
+const web3 = new Web3(process.env.NEXT_PUBLIC_API_WSS);
 
 const ethToWei = (eth: number) =>
   Number(Web3.utils.toWei(eth.toString(), "ether"));
